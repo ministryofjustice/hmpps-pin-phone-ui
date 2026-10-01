@@ -2,12 +2,12 @@ import { test, expect } from '@playwright/test'
 import { loginWithPrisonerAuth } from '../../testUtils'
 import BuyPinPhoneCreditPage from '../../pages/pin-phone/buyPinPhoneCreditPage'
 import CheckOrderDetailsPage from '../../pages/pin-phone/checkOrderDetailsPage'
-import digitalCanteenApi from '../../mockApis/digitalCanteenApi'
+import pinPhoneApi from '../../mockApis/pinPhoneApi'
 
 test.describe('Buy PIN phone credit page', () => {
   test.beforeEach(async ({ page }) => {
-    await digitalCanteenApi.stubCreateCart()
-    await digitalCanteenApi.stubGetBalances('A-BOOKING-ID')
+    await pinPhoneApi.stubCreateCart()
+    await pinPhoneApi.stubGetBalances('A-BOOKING-ID')
     await loginWithPrisonerAuth(page)
     await page.goto('/pin-phone/buy-credit')
   })
@@ -63,7 +63,7 @@ test.describe('Buy PIN phone credit page', () => {
 
     test('should proceed with a predefined amount', async ({ page }) => {
       const buyPage = await BuyPinPhoneCreditPage.verifyOnPage(page)
-      await digitalCanteenApi.stubAddLineItem()
+      await pinPhoneApi.stubAddLineItem()
       await buyPage.amountRadios.nth(1).locator('input').click()
       await buyPage.continueButton.click()
       await CheckOrderDetailsPage.verifyOnPage(page)
@@ -71,7 +71,7 @@ test.describe('Buy PIN phone credit page', () => {
 
     test('should proceed with a custom amount', async ({ page }) => {
       const buyPage = await BuyPinPhoneCreditPage.verifyOnPage(page)
-      await digitalCanteenApi.stubAddLineItem()
+      await pinPhoneApi.stubAddLineItem()
       await buyPage.amountRadios.last().locator('input[type="radio"]').click()
       await buyPage.customAmountInput.fill('7.50')
       await buyPage.continueButton.click()

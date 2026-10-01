@@ -6,7 +6,7 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: '/digitalCanteenApi/health/ping',
+        urlPattern: '/pinPhoneApi/health/ping',
       },
       response: {
         status: httpStatus,
@@ -19,7 +19,7 @@ export default {
     stubFor({
       request: {
         method: 'POST',
-        urlPattern: '/digitalCanteenApi/api/carts',
+        urlPattern: '/pinPhoneApi/api/carts',
       },
       response: {
         status: httpStatus,
@@ -34,7 +34,7 @@ export default {
     stubFor({
       request: {
         method: 'POST',
-        urlPattern: '/digitalCanteenApi/api/add-line-item/.*',
+        urlPattern: '/pinPhoneApi/api/add-line-item/.*',
       },
       response: {
         status: httpStatus,
@@ -49,7 +49,7 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/digitalCanteenApi/api/prisoner-enrichment/${prisonerNumber}`,
+        urlPattern: `/pinPhoneApi/api/prisoner-enrichment/${prisonerNumber}`,
       },
       response: {
         status: httpStatus,
@@ -87,7 +87,7 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/digitalCanteenApi/api/prisoner-contacts/${prisonerNumber}`,
+        urlPattern: `/pinPhoneApi/api/prisoner-contacts/${prisonerNumber}`,
       },
       response: {
         status: httpStatus,
@@ -100,7 +100,7 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/digitalCanteenApi/api/prisoner-contacts/${prisonerNumber}`,
+        urlPattern: `/pinPhoneApi/api/prisoner-contacts/${prisonerNumber}`,
       },
       response: {
         status: httpStatus,
@@ -113,7 +113,7 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: `/digitalCanteenApi/api/prisoner-contacts/${prisonerNumber}`,
+        urlPattern: `/pinPhoneApi/api/prisoner-contacts/${prisonerNumber}`,
       },
       response: {
         status: httpStatus,
@@ -126,7 +126,7 @@ export default {
     stubFor({
       request: {
         method: 'POST',
-        urlPattern: `/digitalCanteenApi/api/carts/${cartId}/checkout`,
+        urlPattern: `/pinPhoneApi/api/carts/${cartId}/checkout`,
       },
       response: {
         status: httpStatus,
@@ -144,7 +144,7 @@ export default {
     stubFor({
       request: {
         method: 'POST',
-        urlPattern: `/digitalCanteenApi/api/carts/${cartId}/checkout`,
+        urlPattern: `/pinPhoneApi/api/carts/${cartId}/checkout`,
       },
       response: {
         status: httpStatus,
@@ -155,7 +155,7 @@ export default {
     stubFor({
       request: {
         method: 'POST',
-        urlPattern: '/digitalCanteenApi/api/opa/evaluate',
+        urlPattern: '/pinPhoneApi/api/opa/evaluate',
       },
       response: {
         status: httpStatus,

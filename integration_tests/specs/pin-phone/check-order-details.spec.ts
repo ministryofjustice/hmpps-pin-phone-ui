@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test'
 import { loginWithPrisonerAuth } from '../../testUtils'
 import CheckOrderDetailsPage from '../../pages/pin-phone/checkOrderDetailsPage'
-import digitalCanteenApi from '../../mockApis/digitalCanteenApi'
+import pinPhoneApi from '../../mockApis/pinPhoneApi'
 import BuyCreditConfirmationPage from '../../pages/pin-phone/buyCreditConfirmationPage'
 import errorMessages from '../../../server/constants/errorMessages'
 
 test.describe('Check order details page', () => {
   test.beforeEach(async ({ page }) => {
     await loginWithPrisonerAuth(page)
-    await digitalCanteenApi.stubGetBalances('A-BOOKING-ID')
+    await pinPhoneApi.stubGetBalances('A-BOOKING-ID')
     await page.goto('/pin-phone/buy-credit')
 
     const otherRadio = page.locator('input[type="radio"]').last()
@@ -50,23 +50,23 @@ test.describe('Check order details page', () => {
 
   test('Should proceed to confirmation page, on complete payment', async ({ page }) => {
     const checkOrderDetailsPage = await CheckOrderDetailsPage.verifyOnPage(page)
-    await digitalCanteenApi.stubEvaluate('ALLOW')
-    await digitalCanteenApi.stubCompletePayment('TEST_CART_ID')
+    await pinPhoneApi.stubEvaluate('ALLOW')
+    await pinPhoneApi.stubCompletePayment('TEST_CART_ID')
     await checkOrderDetailsPage.buyCreditButton.click()
     await BuyCreditConfirmationPage.verifyOnPage(page)
   })
 
   test('Should not proceed to confirmation page, on complete payment failure', async ({ page }) => {
     const checkOrderDetailsPage = await CheckOrderDetailsPage.verifyOnPage(page)
-    await digitalCanteenApi.stubEvaluate('ALLOW')
-    await digitalCanteenApi.stubCompletePaymentFailure('TEST_CART_ID')
+    await pinPhoneApi.stubEvaluate('ALLOW')
+    await pinPhoneApi.stubCompletePaymentFailure('TEST_CART_ID')
     await checkOrderDetailsPage.buyCreditButton.click()
     await expect(checkOrderDetailsPage.header2).toHaveText('Sorry, there is a problem with the service.')
   })
 
   test('Should show error message when policy evaluation is denied', async ({ page }) => {
     const checkOrderDetailsPage = await CheckOrderDetailsPage.verifyOnPage(page)
-    await digitalCanteenApi.stubEvaluate('DENY')
+    await pinPhoneApi.stubEvaluate('DENY')
     await checkOrderDetailsPage.buyCreditButton.click()
     await CheckOrderDetailsPage.verifyOnPage(page)
     await expect(page.locator('.govuk-error-summary')).toContainText(errorMessages.POLICY_EVALUATION_ERROR)

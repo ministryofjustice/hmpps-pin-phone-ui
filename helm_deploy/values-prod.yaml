@@ -1,5 +1,5 @@
 ---
-# Per environment values which override defaults in hmpps-digital-canteen-ui/values.yaml
+# Per environment values which override defaults in hmpps-pin-phone-ui/values.yaml
 
 generic-service:
   replicaCount: 1

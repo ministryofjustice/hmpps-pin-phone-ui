@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { loginWithPrisonerAuth } from '../../testUtils'
 import ContactsPage from '../../pages/pin-phone/ContactsPage'
-import digitalCanteenApi from '../../mockApis/digitalCanteenApi'
+import pinPhoneApi from '../../mockApis/pinPhoneApi'
 
 test.describe('Pin Phone view contacts page', () => {
   test.beforeEach(async ({ page }) => {
@@ -10,7 +10,7 @@ test.describe('Pin Phone view contacts page', () => {
 
   test.describe('with multiple pages of contacts', () => {
     test.beforeEach(async ({ page }) => {
-      await digitalCanteenApi.stubGetMoreThan10Contacts('A-BOOKING-ID')
+      await pinPhoneApi.stubGetMoreThan10Contacts('A-BOOKING-ID')
       await page.goto('/pin-phone/view-contacts')
     })
 
@@ -57,7 +57,7 @@ test.describe('Pin Phone view contacts page', () => {
 
   test.describe('with single page of contacts', () => {
     test.beforeEach(async ({ page }) => {
-      await digitalCanteenApi.stubGetLessThan10Contacts('A-BOOKING-ID')
+      await pinPhoneApi.stubGetLessThan10Contacts('A-BOOKING-ID')
       await page.goto('/pin-phone/view-contacts')
     })
 
@@ -92,7 +92,7 @@ test.describe('Pin Phone view contacts page', () => {
 
   test.describe('with no contacts', () => {
     test.beforeEach(async ({ page }) => {
-      await digitalCanteenApi.stubGetNoContacts('A-BOOKING-ID')
+      await pinPhoneApi.stubGetNoContacts('A-BOOKING-ID')
       await page.goto('/pin-phone/view-contacts')
     })
 

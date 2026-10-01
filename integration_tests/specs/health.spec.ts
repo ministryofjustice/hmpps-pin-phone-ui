@@ -4,7 +4,7 @@ import tokenVerification from '../mockApis/tokenVerification'
 
 import { resetStubs } from '../testUtils'
 import prisonerAuth from '../mockApis/prisonerAuth'
-import digitalCanteenApi from '../mockApis/digitalCanteenApi'
+import pinPhoneApi from '../mockApis/pinPhoneApi'
 
 test.describe('Health', () => {
   test.afterEach(async () => {
@@ -17,7 +17,7 @@ test.describe('Health', () => {
         hmppsAuth.stubPing(),
         tokenVerification.stubPing(),
         prisonerAuth.stubPing(),
-        digitalCanteenApi.stubPing(),
+        pinPhoneApi.stubPing(),
       ])
     })
 
@@ -36,7 +36,7 @@ test.describe('Health', () => {
     test('Info is accessible', async ({ page }) => {
       const response = await page.request.get('/info')
       const payload = await response.json()
-      expect(payload.build.name).toBe('hmpps-digital-canteen-ui')
+      expect(payload.build.name).toBe('hmpps-pin-phone-ui')
     })
   })
 
@@ -46,7 +46,7 @@ test.describe('Health', () => {
         hmppsAuth.stubPing(),
         tokenVerification.stubPing(500),
         prisonerAuth.stubPing(),
-        digitalCanteenApi.stubPing(),
+        pinPhoneApi.stubPing(500),
       ])
     })
 

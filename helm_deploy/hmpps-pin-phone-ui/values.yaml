@@ -3,7 +3,7 @@ generic-service:
   productId: 'DPS128' # productId for the product that this belongs too, i.e. DPS001, see README.md for details
 
   # the IRSA service account name for accessing AWS resources
-  # serviceAccountName: "hmpps-digital-canteen-ui"
+  # serviceAccountName: "hmpps-pin-phone-ui"
 
   replicaCount: 1
 
@@ -54,7 +54,7 @@ generic-service:
     launchpad-secrets:
       LAUNCHPAD_API_CLIENT_ID: 'LAUNCHPAD_API_CLIENT_ID'
       LAUNCHPAD_API_CLIENT_SECRET: 'LAUNCHPAD_API_CLIENT_SECRET'
-    hmpps-digital-canteen-ui-auth-code:
+    hmpps-pin-phone-ui-auth-code:
       AUTH_CODE_CLIENT_ID: 'AUTH_CODE_CLIENT_ID'
       AUTH_CODE_CLIENT_SECRET: 'AUTH_CODE_CLIENT_SECRET'
     hmpps-pin-phone-ui-session-secret:
