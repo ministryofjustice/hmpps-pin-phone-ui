@@ -4,16 +4,20 @@ import nunjucks from 'nunjucks'
 import express from 'express'
 import fs from 'fs'
 import { initialiseName } from './utils'
+import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
 import logger from '../../logger'
 
-export default function nunjucksSetup(app: express.Express): void {
+export default function nunjucksSetup(app: express.Express, applicationInfo: ApplicationInfo): void {
   app.set('view engine', 'njk')
 
   app.locals.asset_path = '/assets/'
   app.locals.applicationName = 'HMPPS Pin Phone Ui'
   app.locals.environmentName = config.environmentName
   app.locals.environmentNameColour = config.environmentName === 'PRE-PRODUCTION' ? 'govuk-tag--green' : ''
+  app.locals.appInsightsConnectionString = config.appInsightsConnectionString
+  app.locals.appInsightsApplicationName = applicationInfo.applicationName
+  app.locals.buildNumber = config.buildNumber
   let assetManifest: Record<string, string> = {}
 
   try {
@@ -30,6 +34,7 @@ export default function nunjucksSetup(app: express.Express): void {
       path.join(__dirname, '../../server/views'),
       'node_modules/govuk-frontend/dist/',
       'node_modules/@ministryofjustice/frontend/',
+      'node_modules/@ministryofjustice/hmpps-prisoner-facing-components/dist/assets/',
     ],
     {
       autoescape: true,

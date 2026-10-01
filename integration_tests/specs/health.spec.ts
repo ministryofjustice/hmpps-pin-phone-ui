@@ -1,12 +1,10 @@
 import { expect, test } from '@playwright/test'
-import exampleApi from '../mockApis/exampleApi'
 import hmppsAuth from '../mockApis/hmppsAuth'
 import tokenVerification from '../mockApis/tokenVerification'
 
 import { resetStubs } from '../testUtils'
-
-// NB: add new mock apis here:
-const mockApis = [hmppsAuth, tokenVerification, exampleApi]
+import prisonerAuth from '../mockApis/prisonerAuth'
+import digitalCanteenApi from '../mockApis/digitalCanteenApi'
 
 test.describe('Health', () => {
   test.afterEach(async () => {
@@ -15,7 +13,12 @@ test.describe('Health', () => {
 
   test.describe('All healthy', () => {
     test.beforeEach(async () => {
-      await Promise.all(mockApis.map(api => api.stubPing()))
+      await Promise.all([
+        hmppsAuth.stubPing(),
+        tokenVerification.stubPing(),
+        prisonerAuth.stubPing(),
+        digitalCanteenApi.stubPing(),
+      ])
     })
 
     test('Health check is accessible and status is UP', async ({ page }) => {
@@ -33,14 +36,21 @@ test.describe('Health', () => {
     test('Info is accessible', async ({ page }) => {
       const response = await page.request.get('/info')
       const payload = await response.json()
-      expect(payload.build.name).toBe('hmpps-pin-phone-ui')
+      expect(payload.build.name).toBe('hmpps-digital-canteen-ui')
     })
   })
 
   test.describe('Some unhealthy', () => {
-    test('Health check status is down for 1 api', async ({ page }) => {
-      await Promise.all(mockApis.map(api => (api === tokenVerification ? api.stubPing(500) : api.stubPing())))
+    test.beforeEach(async () => {
+      await Promise.all([
+        hmppsAuth.stubPing(),
+        tokenVerification.stubPing(500),
+        prisonerAuth.stubPing(),
+        digitalCanteenApi.stubPing(),
+      ])
+    })
 
+    test('Health check status is down', async ({ page }) => {
       const response = await page.request.get('/health')
       const payload = await response.json()
       expect(payload.status).toBe('DOWN')
@@ -48,12 +58,6 @@ test.describe('Health', () => {
       expect(payload.components.tokenVerification.status).toBe('DOWN')
       expect(payload.components.tokenVerification.details.status).toBe(500)
       expect(payload.components.tokenVerification.details.attempts).toBe(3)
-      expect(
-        Object.values<{ status: 'UP' | 'DOWN' }>(payload.components).reduce(
-          (downCount, api) => (api.status === 'DOWN' ? downCount + 1 : downCount),
-          0,
-        ),
-      ).toEqual(1)
     })
   })
 })

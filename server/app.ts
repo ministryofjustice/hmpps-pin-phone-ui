@@ -1,23 +1,26 @@
 import express from 'express'
-import { telemetryMiddleware } from '@ministryofjustice/hmpps-azure-telemetry'
 
 import createError from 'http-errors'
 
 import nunjucksSetup from './utils/nunjucksSetup'
 import errorHandler from './errorHandler'
-import authorisationMiddleware from './middleware/authorisationMiddleware'
+import { appInsightsMiddleware } from './utils/azureAppInsights'
 
 import setUpAuthentication from './middleware/setUpAuthentication'
 import setUpCsrf from './middleware/setUpCsrf'
-import setUpCurrentUser from './middleware/setUpCurrentUser'
+import { setUpLaunchpadHeader } from './middleware/setUpLaunchpadHeader'
+import { setUpLaunchpadFooter } from './middleware/setUpLaunchpadFooter'
 import setUpHealthChecks from './middleware/setUpHealthChecks'
 import setUpStaticResources from './middleware/setUpStaticResources'
-import setUpWebRequestParsing from './middleware/setUpRequestParsing'
+import setUpWebRequestParsing from './middleware/setupRequestParsing'
 import setUpWebSecurity from './middleware/setUpWebSecurity'
 import setUpWebSession from './middleware/setUpWebSession'
+import checkActiveAgencyAccess from './middleware/checkActiveAgencyAccess'
 
 import routes from './routes'
 import type { Services } from './services'
+import config from './config'
+import setUpShuttering from './middleware/setUpShuttering'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -26,19 +29,20 @@ export default function createApp(services: Services): express.Application {
   app.set('trust proxy', true)
   app.set('port', process.env.PORT || 3000)
 
+  app.locals.launchpadHome = config.launchpadHome
+  app.use(appInsightsMiddleware())
   app.use(setUpHealthChecks(services.applicationInfo))
   app.use(setUpWebSecurity())
   app.use(setUpWebSession())
   app.use(setUpWebRequestParsing())
   app.use(setUpStaticResources())
-  nunjucksSetup(app)
+  nunjucksSetup(app, services.applicationInfo)
   app.use(setUpAuthentication())
-  app.use(authorisationMiddleware())
   app.use(setUpCsrf())
-  app.use(setUpCurrentUser())
-  // For prison users, register the `addUserMetadataToTelemetry` middleware after middleware that retrieves caseload data.
-  app.use(telemetryMiddleware.addUserMetadataToTelemetry())
-
+  app.use(setUpLaunchpadHeader)
+  app.use(setUpLaunchpadFooter)
+  app.use(setUpShuttering())
+  app.use(checkActiveAgencyAccess())
   app.use(routes(services))
 
   app.use((_req, _res, next) => next(createError(404, 'Not found')))

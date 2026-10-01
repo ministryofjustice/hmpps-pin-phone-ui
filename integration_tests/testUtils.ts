@@ -2,6 +2,7 @@ import { Page } from '@playwright/test'
 import tokenVerification from './mockApis/tokenVerification'
 import hmppsAuth, { type UserToken } from './mockApis/hmppsAuth'
 import { resetStubs } from './mockApis/wiremock'
+import prisonerAuth from './mockApis/prisonerAuth'
 
 export { resetStubs }
 
@@ -11,10 +12,10 @@ export const attemptHmppsAuthLogin = async (page: Page) => {
   await page.goto('/')
   page.locator('h1', { hasText: 'Sign in' })
   const url = await hmppsAuth.getSignInUrl()
-  return page.goto(url)
+  await page.goto(url)
 }
 
-export const login = async (
+export const loginWithHmppsAuth = async (
   page: Page,
   { name, roles = DEFAULT_ROLES, active = true, authSource = 'nomis' }: UserToken & { active?: boolean } = {},
 ) => {
@@ -25,5 +26,38 @@ export const login = async (
     hmppsAuth.token({ name, roles, authSource }),
     tokenVerification.stubVerifyToken(active),
   ])
-  return attemptHmppsAuthLogin(page)
+  await attemptHmppsAuthLogin(page)
+}
+
+export const attemptPrisonerAuthLogin = async (page: Page) => {
+  await page.goto('/')
+  await page.waitForURL('**/launchpadauth/v1/oauth2/authorize**')
+  const url = await prisonerAuth.getSignInUrl()
+  await page.goto(url)
+}
+
+export const loginWithPrisonerAuth = async (
+  page: Page,
+  {
+    name = 'A TestUser',
+    establishmentCode = 'BNI',
+    tokenExpiresInSeconds = 9999,
+    active = true,
+    roles = DEFAULT_ROLES,
+  }: {
+    active?: boolean
+    roles?: string[]
+    name?: string
+    establishmentCode?: string
+    tokenExpiresInSeconds?: number
+  } = {},
+) => {
+  await Promise.all([
+    prisonerAuth.favicon(),
+    prisonerAuth.stubSignInPage(),
+    prisonerAuth.token({ name, establishmentCode, expiresInSeconds: tokenExpiresInSeconds }),
+    hmppsAuth.token({ name, roles, authSource: 'nomis' }),
+    tokenVerification.stubVerifyToken(active),
+  ])
+  await attemptPrisonerAuthLogin(page)
 }

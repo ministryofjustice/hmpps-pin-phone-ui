@@ -1,6 +1,6 @@
-import { UUID } from 'crypto'
+import { LaunchpadUser } from '@ministryofjustice/hmpps-prisoner-auth'
 
-export type AuthSource = 'nomis' | 'delius' | 'external' | 'azuread'
+export type AuthSource = 'nomis' | 'delius' | 'external' | 'azuread' | 'prisoner-auth'
 
 /**
  * These are the details that all user types share.
@@ -8,8 +8,7 @@ export type AuthSource = 'nomis' | 'delius' | 'external' | 'azuread'
 export interface BaseUser {
   authSource: AuthSource
   username: string
-  userId: string | undefined // This is an id specific to the authSource, for example for NOMIS users this is the staffId
-  userUuid: UUID | undefined // This is a UUID created by HMPPS Auth upon first user login that is unique to the user across all authSources
+  userId: string | undefined
   name: string | undefined
   displayName: string
   userRoles: string[]
@@ -60,4 +59,4 @@ export interface AzureADUser extends BaseUser {
   authSource: 'azuread'
 }
 
-export type HmppsUser = PrisonUser | ProbationUser | ExternalUser | AzureADUser
+export type HmppsUser = PrisonUser | ProbationUser | ExternalUser | AzureADUser | LaunchpadUser
