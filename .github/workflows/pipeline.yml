@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: {}
     outputs:
-      enabled: ${{ github.ref == 'refs/heads/main' && (inputs.push || inputs.push == null) }}
+      enabled: ${{ github.ref == 'refs/heads/main' && (inputs.push == true) }}
     steps:
       - name: Set publish flag
         run: echo "Publishing enabled ${{ github.ref == 'refs/heads/main' && (inputs.push || inputs.push == null) }}"
@@ -81,7 +81,7 @@ jobs:
       docker_registry: 'ghcr.io'
       registry_org: 'ministryofjustice'
       additional_docker_tag: ${{ inputs.additional_docker_tag }}
-      push: ${{ needs.check_publish.outputs.enabled == 'true' }}
+      push: true
       docker_multiplatform: false
       generate_sbom: ${{ needs.check_publish.outputs.enabled == 'true' }}
       attach_sbom_to_registry: ${{ needs.check_publish.outputs.enabled == 'true' }}
