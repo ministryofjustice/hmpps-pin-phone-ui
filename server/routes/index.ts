@@ -1,35 +1,23 @@
 import { Router } from 'express'
 
 import type { Services } from '../services'
-import auditSearchRequest from '../middleware/auditSearchRequest'
+import pinPhoneRoutes from './pin-phone/pin-phone-landing'
+import buyPinPhoneCreditRoutes from './pin-phone/buy-pin-phone-credit'
+import checkOrderDetailsRoutes from './pin-phone/check-order-details'
+import buyCreditConfirmation from './pin-phone/buy-credit-confirmation'
+import viewContacts from './pin-phone/view-contacts'
 
-export enum Page {
-  EXAMPLE_PAGE = 'EXAMPLE_PAGE',
-  SEARCH_OFFENDERS = 'SEARCH_OFFENDERS',
-}
-
-export default function routes(services: Services): Router {
-  const { auditService, exampleService } = services
+export default function routes({ auditService, pinPhoneService, telemetryService }: Services): Router {
   const router = Router()
 
   router.get('/', async (req, res, _next) => {
-    await auditService.logPageView(Page.EXAMPLE_PAGE, {
-      who: res.locals.user.username,
-      correlationId: req.id,
-    })
-
-    const currentTime = await exampleService.getCurrentTime()
-    return res.render('pages/index', { currentTime })
+    res.redirect('/pin-phone')
   })
 
-  // Example of an audited route.
-  router.post(
-    '/perform-search',
-    auditSearchRequest({ services, page: Page.SEARCH_OFFENDERS }),
-    async (_req, res, _next) => {
-      return res.redirect('/')
-    },
-  )
-
+  pinPhoneRoutes(router, auditService, telemetryService)
+  buyPinPhoneCreditRoutes(router, auditService, pinPhoneService, telemetryService)
+  checkOrderDetailsRoutes(router, auditService, pinPhoneService, telemetryService)
+  buyCreditConfirmation(router, auditService, telemetryService)
+  viewContacts(router, auditService, pinPhoneService, telemetryService)
   return router
 }

@@ -1,4 +1,3 @@
-import { AuditClientConfig } from '@ministryofjustice/hmpps-audit-client'
 import { AgentConfig } from '@ministryofjustice/hmpps-rest-client'
 
 const production = process.env.NODE_ENV === 'production'
@@ -15,7 +14,7 @@ function get<T>(name: string, fallback: T, options = { requireInProduction: fals
 
 const requiredInProduction = { requireInProduction: true }
 
-const auditConfig = (): AuditClientConfig => {
+const auditConfig = () => {
   const auditEnabled = get('AUDIT_ENABLED', 'false') === 'true'
   return {
     enabled: auditEnabled,
@@ -40,7 +39,7 @@ export default {
   redis: {
     enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',
     host: get('REDIS_HOST', 'localhost', requiredInProduction),
-    port: parseInt(process.env.REDIS_PORT, 10) || 6379,
+    port: parseInt(process.env.REDIS_PORT ?? '6379', 10),
     password: process.env.REDIS_AUTH_TOKEN,
     tls_enabled: get('REDIS_TLS_ENABLED', 'false'),
   },
@@ -48,6 +47,7 @@ export default {
     secret: get('SESSION_SECRET', 'app-insecure-default-session', requiredInProduction),
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 120)),
   },
+  launchpadHome: get('LAUNCHPAD_URL', 'https://launchpad-home-dev.hmpps.service.justice.gov.uk/', requiredInProduction),
   apis: {
     hmppsAuth: {
       url: get('HMPPS_AUTH_URL', 'http://localhost:9090/auth', requiredInProduction),
@@ -63,6 +63,40 @@ export default {
       systemClientId: get('CLIENT_CREDS_CLIENT_ID', 'clientid', requiredInProduction),
       systemClientSecret: get('CLIENT_CREDS_CLIENT_SECRET', 'clientsecret', requiredInProduction),
     },
+    prisonerAuth: {
+      url: get('LAUNCHPAD_AUTH_URL', 'http://localhost:8080', requiredInProduction),
+      healthPath: '/health/ping',
+      externalUrl: get('LAUNCHPAD_AUTH_EXTERNAL_URL', get('LAUNCHPAD_AUTH_URL', 'http://localhost:8080')),
+      timeout: {
+        response: Number(get('LAUNCHPAD_AUTH_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('LAUNCHPAD_AUTH_TIMEOUT_DEADLINE', 10000)),
+      },
+      refreshCheckTimeInMinutes: Number(get('REFRESH_CHECK_TIMEOUT_IN_MINUTES', 5)),
+      agent: new AgentConfig(Number(get('LAUNCHPAD_AUTH_TIMEOUT_RESPONSE', 10000))),
+      apiClientId: get('LAUNCHPAD_API_CLIENT_ID', 'clientid', requiredInProduction),
+      apiClientSecret: get('LAUNCHPAD_API_CLIENT_SECRET', 'clientsecret', requiredInProduction),
+      nonce: get('LAUNCHPAD_AUTH_NONCE', 'true') !== 'false',
+      scopes: [
+        {
+          type: 'user.basic.read',
+          accessGranted: 'Grants permission to read basic user information like firstName and lastName.',
+          permittedImplicitly: true,
+          humanReadableDescription: 'Your name',
+        },
+        {
+          type: 'user.establishment.read',
+          accessGranted: 'Grants permission to read details about the establishment or prison the user is located.',
+          permittedImplicitly: false,
+          humanReadableDescription: 'Details of your prison',
+        },
+        {
+          type: 'user.booking.read',
+          accessGranted: 'Grants permission to read the booking details of the user.',
+          permittedImplicitly: false,
+          humanReadableDescription: 'Prison booking details',
+        },
+      ],
+    },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
       healthPath: '/health/ping',
@@ -73,14 +107,15 @@ export default {
       agent: new AgentConfig(Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 5000))),
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
-    exampleApi: {
-      url: get('EXAMPLE_API_URL', 'http://localhost:8080', requiredInProduction),
+
+    pinPhoneApi: {
+      url: get('PIN_PHONE_API_URL', 'http://localhost:8080', requiredInProduction),
       healthPath: '/health/ping',
       timeout: {
-        response: Number(get('EXAMPLE_API_TIMEOUT_RESPONSE', 5000)),
-        deadline: Number(get('EXAMPLE_API_TIMEOUT_DEADLINE', 5000)),
+        response: Number(get('PIN_PHONE_API_TIMEOUT_RESPONSE', 5000)),
+        deadline: Number(get('PIN_PHONE_API_TIMEOUT_DEADLINE', 5000)),
       },
-      agent: new AgentConfig(Number(get('EXAMPLE_API_TIMEOUT_RESPONSE', 5000))),
+      agent: new AgentConfig(Number(get('PIN_PHONE_API_TIMEOUT_RESPONSE', 5000))),
     },
   },
   sqs: {
@@ -88,4 +123,11 @@ export default {
   },
   ingressUrl: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
+  shutterEnabled: get('SHUTTER_ENABLED', 'false') === 'true',
+  prisonerAppsUrl: get(
+    'PRISONER_APPS_URL',
+    'https://prisoner-apps-dev.hmpps.service.justice.gov.uk/',
+    requiredInProduction,
+  ),
+  appInsightsConnectionString: get('APPLICATIONINSIGHTS_CONNECTION_STRING', '', requiredInProduction),
 }

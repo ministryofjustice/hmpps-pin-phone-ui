@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'
-import type { SuperAgentRequest } from 'superagent'
-import { getMatchingRequests, stubFor, stubPing } from './wiremock'
+import { stubFor, getMatchingRequests } from './wiremock'
 
 export interface UserToken {
   name?: string
@@ -27,25 +26,35 @@ export default {
     getMatchingRequests({
       method: 'GET',
       urlPath: '/auth/oauth/authorize',
-    }).then(requests => {
+    }).then(data => {
+      const { requests } = data.body
       const stateValue = requests[requests.length - 1].queryParams.state.values[0]
       return `/sign-in/callback?code=codexxxx&state=${stateValue}`
     }),
 
-  favicon: (): SuperAgentRequest =>
+  favicon: () =>
     stubFor({
       request: {
         method: 'GET',
-        urlPath: '/favicon.ico',
+        urlPattern: '/favicon.ico',
       },
       response: {
         status: 200,
       },
     }),
 
-  stubPing: (httpStatus = 200): SuperAgentRequest => stubPing('/auth', httpStatus),
+  stubPing: () =>
+    stubFor({
+      request: {
+        method: 'GET',
+        urlPattern: '/auth/health/ping',
+      },
+      response: {
+        status: 200,
+      },
+    }),
 
-  stubSignInPage: (): SuperAgentRequest =>
+  stubSignInPage: () =>
     stubFor({
       request: {
         method: 'GET',
@@ -61,7 +70,7 @@ export default {
       },
     }),
 
-  stubSignOutPage: (): SuperAgentRequest =>
+  stubSignOutPage: () =>
     stubFor({
       request: {
         method: 'GET',
@@ -76,7 +85,7 @@ export default {
       },
     }),
 
-  stubManageDetailsPage: (): SuperAgentRequest =>
+  stubManageDetailsPage: () =>
     stubFor({
       request: {
         method: 'GET',
@@ -91,11 +100,11 @@ export default {
       },
     }),
 
-  token: (userToken: UserToken): SuperAgentRequest =>
+  token: (userToken: UserToken) =>
     stubFor({
       request: {
         method: 'POST',
-        urlPath: '/auth/oauth/token',
+        urlPattern: '/auth/oauth/token',
       },
       response: {
         status: 200,

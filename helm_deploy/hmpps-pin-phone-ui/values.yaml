@@ -2,10 +2,10 @@ generic-service:
   nameOverride: hmpps-pin-phone-ui
   productId: 'DPS128' # productId for the product that this belongs too, i.e. DPS001, see README.md for details
 
-  # the IRSA service account name for accessing AWS resources (e.g: audit SQS queue)
+  # the IRSA service account name for accessing AWS resources
   # serviceAccountName: "hmpps-pin-phone-ui"
 
-  replicaCount: 4
+  replicaCount: 1
 
   image:
     repository: ghcr.io/ministryofjustice/hmpps-pin-phone-ui
@@ -16,6 +16,13 @@ generic-service:
     enabled: true
     host: app-hostname.local # override per environment
     tlsSecretName: hmpps-pin-phone-ui-cert
+    annotations:
+      modsecurity_enabled: 'true'
+      modsecurity_github_team: "hmpps-digital-canteen-devs"
+      modsecurity_snippet: |
+        SecAuditEngine On
+        SecRuleEngine On
+        SecDefaultAction "phase:2,pass,log,tag:github_team=hmpps-digital-canteen-devs,tag:namespace={{ .Release.Namespace }}"
 
   livenessProbe:
     httpGet:
@@ -28,12 +35,11 @@ generic-service:
   # Environment variables to load into the deployment
   env:
     NODE_ENV: 'production'
-    LOG_LEVEL: 'info'
     REDIS_ENABLED: 'true'
     REDIS_TLS_ENABLED: 'true'
     TOKEN_VERIFICATION_ENABLED: 'true'
-    AUDIT_ENABLED: 'false'
-    AUDIT_SERVICE_NAME: 'hmpps-pin-phone-ui' # Your audit service name
+    AUDIT_SQS_REGION: 'eu-west-2'
+    AUDIT_SERVICE_NAME: 'DPS128' # Your audit service name
 
   # Pre-existing kubernetes secrets to load as environment variables in the deployment.
   # namespace_secrets:
@@ -43,23 +49,29 @@ generic-service:
   namespace_secrets:
     # These secrets are created by terraform.
     hmpps-pin-phone-ui-client-creds:
-      CLIENT_CREDS_CLIENT_ID: 'CLIENT_CREDS_CLIENT_ID'
-      CLIENT_CREDS_CLIENT_SECRET: 'CLIENT_CREDS_CLIENT_SECRET'
+      CLIENT_CREDS_CLIENT_ID: 'CLIENT_ID'
+      CLIENT_CREDS_CLIENT_SECRET: 'CLIENT_SECRET'
+    launchpad-secrets:
+      LAUNCHPAD_API_CLIENT_ID: 'LAUNCHPAD_API_CLIENT_ID'
+      LAUNCHPAD_API_CLIENT_SECRET: 'LAUNCHPAD_API_CLIENT_SECRET'
     hmpps-pin-phone-ui-auth-code:
       AUTH_CODE_CLIENT_ID: 'AUTH_CODE_CLIENT_ID'
       AUTH_CODE_CLIENT_SECRET: 'AUTH_CODE_CLIENT_SECRET'
     hmpps-pin-phone-ui-session-secret:
       SESSION_SECRET: 'SESSION_SECRET'
-    hmpps-pin-phone-ui-elasticache-redis:
+    pin-phone-redis-secrets:
       REDIS_HOST: 'primary_endpoint_address'
       REDIS_AUTH_TOKEN: 'auth_token'
     hmpps-pin-phone-ui-application-insights:
       APPLICATIONINSIGHTS_CONNECTION_STRING: "APPLICATIONINSIGHTS_CONNECTION_STRING"
-    # This secret will need to be created in your namespace if you add audit integration
-    # IRSA configuration in your namespace will also be required.
+    # This secret will need to be created in your namespace (note it isn't in hmpps-templates-dev)
+    # IRSA configuration in your namespace will also be required, and then uncomment serviceAccountName above.
     # sqs-hmpps-audit-secret:
-    #  AUDIT_SQS_QUEUE_URL: "sqs_queue_url"
-    #  AUDIT_SQS_QUEUE_NAME: "sqs_queue_name"
+    #   AUDIT_SQS_QUEUE_URL: 'sqs_queue_url'
+
+  allowlist:
+    groups:
+      - internal
 
 generic-prometheus-alerts:
   targetApplication: hmpps-pin-phone-ui
