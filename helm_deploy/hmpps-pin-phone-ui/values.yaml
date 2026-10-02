@@ -49,8 +49,8 @@ generic-service:
   namespace_secrets:
     # These secrets are created by terraform.
     hmpps-pin-phone-ui-client-creds:
-      CLIENT_CREDS_CLIENT_ID: 'CLIENT_CREDS_CLIENT_ID'
-      CLIENT_CREDS_CLIENT_SECRET: 'CLIENT_CREDS_CLIENT_SECRET'
+      CLIENT_CREDS_CLIENT_ID: 'CLIENT_ID'
+      CLIENT_CREDS_CLIENT_SECRET: 'CLIENT_SECRET'
     launchpad-secrets:
       LAUNCHPAD_API_CLIENT_ID: 'LAUNCHPAD_API_CLIENT_ID'
       LAUNCHPAD_API_CLIENT_SECRET: 'LAUNCHPAD_API_CLIENT_SECRET'
@@ -59,7 +59,7 @@ generic-service:
       AUTH_CODE_CLIENT_SECRET: 'AUTH_CODE_CLIENT_SECRET'
     hmpps-pin-phone-ui-session-secret:
       SESSION_SECRET: 'SESSION_SECRET'
-    hmpps-pin-phone-ui-elasticache-redis:
+    pin-phone-redis-secrets:
       REDIS_HOST: 'primary_endpoint_address'
       REDIS_AUTH_TOKEN: 'auth_token'
     hmpps-pin-phone-ui-application-insights:
