@@ -18,6 +18,7 @@ generic-service:
     ENVIRONMENT_NAME: DEV
     SHUTTER_ENABLED: "false"
     AUDIT_ENABLED: "false"
+    BYPASS_AUTH: "true"
 
 generic-prometheus-alerts:
   businessHoursOnly: true
