@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: {}
     outputs:
-      enabled: ${{ github.ref == 'refs/heads/main' && (inputs.push || inputs.push == null) }}
+      enabled: true
     steps:
       - name: Set publish flag
         run: echo "Publishing enabled ${{ github.ref == 'refs/heads/main' && (inputs.push || inputs.push == null) }}"
