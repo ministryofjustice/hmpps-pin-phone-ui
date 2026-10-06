@@ -1,11 +1,20 @@
+/* eslint-disable import/first */
+/*
+ * Do appinsights first as it does some magic instrumentation work, i.e. it affects other 'require's
+ * In particular, applicationinsights automatically collects bunyan logs
+ */
 import { AuthenticationClient, InMemoryTokenStore, RedisTokenStore } from '@ministryofjustice/hmpps-auth-clients'
-import { createRedisClient } from './redisClient'
-import config from '../config'
-import logger from '../../logger'
-import ExampleApiClient from './exampleApiClient'
+import { initialiseAppInsights, buildAppInsightsClient } from '../utils/azureAppInsights'
 import applicationInfoSupplier from '../applicationInfo'
 
 const applicationInfo = applicationInfoSupplier()
+initialiseAppInsights()
+const applicationInsightsClient = buildAppInsightsClient(applicationInfo)
+import { createRedisClient } from './redisClient'
+import config from '../config'
+import HmppsAuditClient from './hmppsAuditClient'
+import logger from '../../logger'
+import DigitalPinPhoneApiClient from './digitalPinPhoneApiClient'
 
 export const dataAccess = () => {
   const hmppsAuthClient = new AuthenticationClient(
@@ -17,10 +26,12 @@ export const dataAccess = () => {
   return {
     applicationInfo,
     hmppsAuthClient,
-    exampleApiClient: new ExampleApiClient(hmppsAuthClient),
+    pinPhoneApiClient: new DigitalPinPhoneApiClient(hmppsAuthClient),
+    hmppsAuditClient: new HmppsAuditClient(config.sqs.audit),
+    applicationInsightsClient,
   }
 }
 
 export type DataAccess = ReturnType<typeof dataAccess>
 
-export { AuthenticationClient, ExampleApiClient }
+export { AuthenticationClient, HmppsAuditClient, DigitalPinPhoneApiClient }

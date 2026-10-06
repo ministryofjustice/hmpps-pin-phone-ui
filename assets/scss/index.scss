@@ -9,3 +9,8 @@ $govuk-page-width: $moj-page-width;
 
 @import './components/header-bar';
 @import './overrides/local';
+
+@import './components/breadcrumbs';
+@import './components/pin-phone-card';
+@import './components/radio-button-divider';
+@import 'node_modules/@ministryofjustice/hmpps-prisoner-facing-components/dist/assets/scss/all';

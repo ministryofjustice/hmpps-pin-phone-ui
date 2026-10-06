@@ -1,0 +1,24 @@
+---
+# Per environment values which override defaults in hmpps-pin-phone-ui/values.yaml
+
+generic-service:
+  replicaCount: 1
+
+  ingress:
+    host: pin-phone-ui-test.hmpps.service.justice.gov.uk
+
+  env:
+    INGRESS_URL: "https://pin-phone-ui-test.hmpps.service.justice.gov.uk"
+    HMPPS_AUTH_URL: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth"
+    TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
+    LAUNCHPAD_AUTH_URL: "https://launchpad-auth-dev.hmpps.service.justice.gov.uk"
+    LAUNCHPAD_URL: "https://launchpad-home-dev.hmpps.service.justice.gov.uk/"
+    PRISONER_APPS_URL: "https://prisoner-apps-dev.hmpps.service.justice.gov.uk/"
+    PIN_PHONE_API_URL: "https://pin-phone-test.prison.service.justice.gov.uk"
+    ENVIRONMENT_NAME: TEST
+    SHUTTER_ENABLED: "false"
+    AUDIT_ENABLED: "false"
+
+generic-prometheus-alerts:
+  businessHoursOnly: true
+  alertSeverity: hmpps-pin-phone-dev

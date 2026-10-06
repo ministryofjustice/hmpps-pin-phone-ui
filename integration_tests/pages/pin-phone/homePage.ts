@@ -1,0 +1,20 @@
+import { expect, type Locator, type Page } from '@playwright/test'
+import AbstractPage from '../abstractPage'
+
+export default class HomePage extends AbstractPage {
+  readonly header: Locator
+
+  readonly usersName: Locator
+
+  private constructor(page: Page) {
+    super(page)
+    this.header = page.locator('h1')
+    this.usersName = page.getByTestId('launchpad-home-header-user-name').getByText(' ')
+  }
+
+  static async verifyOnPage(page: Page): Promise<HomePage> {
+    const launchpadPage = new HomePage(page)
+    await expect(launchpadPage.header).toBeVisible()
+    return launchpadPage
+  }
+}

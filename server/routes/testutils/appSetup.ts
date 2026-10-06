@@ -1,46 +1,61 @@
 import express, { Express } from 'express'
-import { NotFound } from 'http-errors'
-import { AuditService } from '@ministryofjustice/hmpps-audit-client'
+import createError, { NotFound } from 'http-errors'
 
+import { randomUUID } from 'crypto'
+import { LaunchpadUser } from '@ministryofjustice/hmpps-prisoner-auth'
 import routes from '../index'
 import nunjucksSetup from '../../utils/nunjucksSetup'
 import errorHandler from '../../errorHandler'
 import type { Services } from '../../services'
-import { HmppsUser } from '../../interfaces/hmppsUser'
+import AuditService from '../../services/auditService'
+import { HmppsUser, PrisonUser } from '../../interfaces/hmppsUser'
 import setUpWebSession from '../../middleware/setUpWebSession'
-import type { ApplicationInfo } from '../../applicationInfo'
+import HmppsAuditClient from '../../data/hmppsAuditClient'
+import { DigitalPinPhoneApiClient } from '../../data'
+import PinPhoneService from '../../services/pinPhoneService'
+import TelemetryService from '../../services/telemetryService'
+import { ApplicationInfo } from '../../applicationInfo'
 
-jest.mock('@ministryofjustice/hmpps-audit-client')
+jest.mock('../../services/auditService')
+jest.mock('../../data/digitalPinPhoneApiClient')
+jest.mock('../../services/telemetryService')
+
+const testAppInfo: ApplicationInfo = {
+  applicationName: 'test',
+  buildNumber: '1',
+  gitRef: 'long ref',
+  gitShortHash: 'short ref',
+  productId: '1',
+  branchName: 'main',
+}
 
 export const user: HmppsUser = {
   name: 'FIRST LAST',
   userId: 'id',
-  userUuid: '11111111-1111-1111-1111-111111111111',
   token: 'token',
   username: 'user1',
   displayName: 'First Last',
   authSource: 'nomis',
   staffId: 1234,
   userRoles: [],
-}
-
-const applicationInfo: ApplicationInfo = {
-  applicationName: 'hmpps-pin-phone-ui',
-  buildNumber: '123',
-  gitRef: 'abc123',
-  gitShortHash: 'abc',
-  productId: 'DPSXYZ',
-  branchName: 'main',
-}
+  establishment: {
+    agency_id: 'HEI',
+    name: 'Hewell',
+    display_name: 'Hewell',
+    youth: false,
+  },
+  givenName: 'FIRST',
+  familyName: 'LAST',
+} as PrisonUser | LaunchpadUser
 
 export const flashProvider = jest.fn()
 
-function appSetup(services: Partial<Services>, production: boolean, userSupplier: () => HmppsUser): Express {
+function appSetup(services: Services, production: boolean, userSupplier: () => HmppsUser): Express {
   const app = express()
 
   app.set('view engine', 'njk')
 
-  nunjucksSetup(app)
+  nunjucksSetup(app, testAppInfo)
   app.use(setUpWebSession())
   app.use((req, res, next) => {
     req.user = userSupplier() as Express.User
@@ -57,12 +72,18 @@ function appSetup(services: Partial<Services>, production: boolean, userSupplier
     next()
   })
   app.use((req, _res, next) => {
-    req.id = '4d0fd4da-ecc1-454d-8308-cdee6b8b91f7'
+    req.id = randomUUID()
     next()
   })
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
-  app.use(routes({ applicationInfo, ...services } as Services))
+  app.use(routes(services))
+  app.get('/error', (_req, _res, next) => next(createError(500, 'Test Error')))
+  app.get('/medusa-error', (_req, _res, next) => {
+    const error = createError(400, 'Bad Request')
+    error.data = { status: 400, userMessage: 'Medusa service is currently unavailable' }
+    next(error)
+  })
   app.use((_req, _res, next) => next(new NotFound()))
   app.use(errorHandler(production))
 
@@ -72,7 +93,9 @@ function appSetup(services: Partial<Services>, production: boolean, userSupplier
 export function appWithAllRoutes({
   production = false,
   services = {
-    auditService: new AuditService({} as never) as jest.Mocked<AuditService>,
+    auditService: new AuditService({} as HmppsAuditClient) as jest.Mocked<AuditService>,
+    pinPhoneService: new PinPhoneService({} as DigitalPinPhoneApiClient) as jest.Mocked<PinPhoneService>,
+    telemetryService: new TelemetryService(null) as jest.Mocked<TelemetryService>,
   },
   userSupplier = () => user,
 }: {

@@ -2,7 +2,7 @@
 # Per environment values which override defaults in hmpps-pin-phone-ui/values.yaml
 
 generic-service:
-  replicaCount: 2
+  replicaCount: 1
 
   ingress:
     host: pin-phone-ui-preprod.hmpps.service.justice.gov.uk
@@ -11,32 +11,14 @@ generic-service:
     INGRESS_URL: "https://pin-phone-ui-preprod.hmpps.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-preprod.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
-    EXAMPLE_API_URL: 'https://template-kotlin-preprod.hmpps.service.justice.gov.uk'
-    ENVIRONMENT_NAME: PRE-PRODUCTION
-
-  scheduledDowntime:
-    enabled: true
-
-  allowlist:
-    # Configure groups as appropriate to give the minimum ingress access required:
-    #   digital_staff_and_mojo: devices on the MoJ network
-    #   moj_cloud_platform: services on Cloud Platform
-    # Other IP allowlist groups are here:
-    # https://github.com/ministryofjustice/hmpps-ip-allowlists/blob/main/ip-allowlist-groups.yaml
-
-    groups:
-      - digital_staff_and_mojo
-      - moj_cloud_platform
-
-  # NOTE: Removing ALL allowlist groups will make the application accessible from the internet.
-  #       If you are intending to do this, please ensure you uncomment the 'modsecurity_enabled=true'
-  #       entry in the ingress above. This will enable WAF protection of the endpoint. You will need
-  #       to configure modsecurity rules to suit your needs. Further information can be found here:
-  #       https://user-guide.cloud-platform.service.justice.gov.uk/documentation/networking/modsecurity.html#modsecurity-web-application-firewall
-
-
-
+    LAUNCHPAD_AUTH_URL: "https://launchpad-auth-preprod.hmpps.service.justice.gov.uk"
+    LAUNCHPAD_URL: "https://launchpad-home-preprod.hmpps.service.justice.gov.uk"
+    PRISONER_APPS_URL: "https://prisoner-apps-preprod.hmpps.service.justice.gov.uk/"
+    PIN_PHONE_API_URL: "https://pin-phone-preprod.prison.service.justice.gov.uk"
+    ENVIRONMENT_NAME: PREPROD
+    SHUTTER_ENABLED: "true"
+    AUDIT_ENABLED: "false"
 
 generic-prometheus-alerts:
-  alertSeverity: hmpps_alerts_nonprod
   businessHoursOnly: true
+  alertSeverity: hmpps-pin-phone-preprod
