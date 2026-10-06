@@ -27,7 +27,7 @@
   },
   "engines": {
     "node": "^24",
-    "npm": "^11"
+    "npm": "^11 || ^12"
   },
   "dependencies": {
     "@microsoft/applicationinsights-clickanalytics-js": "^3.4.3",
