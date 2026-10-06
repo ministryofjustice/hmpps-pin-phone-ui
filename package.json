@@ -103,6 +103,7 @@
     "@opentelemetry/core": "2.11.0",
     "brace-expansion": ">=5.0.12",
     "proxy-addr": "2.0.8",
-    "moment": "2.31.0"
+    "moment": "2.31.0",
+    "js-yaml": "5.4.2"
   }
 }
