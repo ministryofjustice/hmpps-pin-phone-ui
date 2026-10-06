@@ -26,13 +26,13 @@
     "setup": "npm ci && hmpps-npm-script-run-allowlist"
   },
   "engines": {
-    "node": "^v24.21.0",
-    "npm": "12.2.0"
+    "node": "^24",
+    "npm": "^11"
   },
   "dependencies": {
-    "@microsoft/applicationinsights-clickanalytics-js": "^3.4.4",
-    "@microsoft/applicationinsights-web": "^3.4.4",
-    "@aws-sdk/client-sqs": "^3.1141.0",
+    "@microsoft/applicationinsights-clickanalytics-js": "^3.4.3",
+    "@microsoft/applicationinsights-web": "^3.4.3",
+    "@aws-sdk/client-sqs": "^3.1036.0",
     "@ministryofjustice/frontend": "^9.0.0",
     "@ministryofjustice/hmpps-auth-clients": "^1.0.2",
     "@ministryofjustice/hmpps-monitoring": "^1.1.0",
@@ -57,7 +57,9 @@
     "passport": "^0.7.0",
     "passport-oauth2": "^1.8.0",
     "redis": "^5.12.1",
-    "superagent": "^10.4.1"
+    "superagent": "^10.4.1",
+    "@emnapi/core": "^1.11.3",
+    "@emnapi/runtime": "^1.11.3"
   },
   "devDependencies": {
     "@jgoz/esbuild-plugin-typecheck": "^4.0.5",
