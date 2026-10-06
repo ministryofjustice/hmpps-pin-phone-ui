@@ -9,6 +9,7 @@ on:
         required: true
         options:
           - dev
+          - test
           - preprod
           - prod
         default: 'dev'
@@ -25,6 +26,7 @@ jobs:
   helm_lint:
     name: helm lint
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/test_helm_lint.yml@v2 # WORKFLOW_VERSION
+    secrets: inherit
     with:
       environment: ${{ inputs.environment }}
   deploy_env:
