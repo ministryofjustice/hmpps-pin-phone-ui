@@ -5,6 +5,7 @@ import tokenVerification from '../mockApis/tokenVerification'
 import { resetStubs } from '../testUtils'
 import prisonerAuth from '../mockApis/prisonerAuth'
 import pinPhoneApi from '../mockApis/pinPhoneApi'
+import featureFlagService from '../mockApis/featureFlagService'
 
 test.describe('Health', () => {
   test.afterEach(async () => {
@@ -18,6 +19,7 @@ test.describe('Health', () => {
         tokenVerification.stubPing(),
         prisonerAuth.stubPing(),
         pinPhoneApi.stubPing(),
+        featureFlagService.stubPing(),
       ])
     })
 
