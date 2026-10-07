@@ -27,6 +27,7 @@
       </div>
     </div>
 
+  {% if canViewContacts %}
     <div class="app-card app-card--blue">
       <div class="app-card__header">
         <svg class="app-card__icon" viewBox="0 0 109 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="true">
@@ -40,5 +41,6 @@
         <p class="govuk-body app-card__description">View your approved and pending contacts.</p>
       </div>
     </div>
+  {% endif %}
   </div>
 {% endblock %}
