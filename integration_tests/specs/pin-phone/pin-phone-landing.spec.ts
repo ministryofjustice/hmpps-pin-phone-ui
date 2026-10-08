@@ -2,17 +2,10 @@ import { test, expect } from '@playwright/test'
 import { loginWithPrisonerAuth } from '../../testUtils'
 import PinPhoneLandingPage from '../../pages/pin-phone/pinPhoneLandingPage'
 import config from '../../../server/config'
-import featureFlagService from '../../mockApis/featureFlagService'
 
 test.describe('Pin Phone home page', () => {
   test.beforeEach(async ({ page }) => {
     await loginWithPrisonerAuth(page)
-
-    await featureFlagService.stubFeatureFlags([
-      { key: 'view-contacts', enabled: true },
-      { key: 'active-agency', enabled: true },
-    ])
-
     await page.goto('/pin-phone')
   })
 

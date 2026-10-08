@@ -118,7 +118,7 @@ export default {
       agent: new AgentConfig(Number(get('PIN_PHONE_API_TIMEOUT_RESPONSE', 50000))),
     },
     fliptClient: {
-      url: get('FLIP_API_URL', 'FLIP_API_URL', requiredInProduction),
+      url: get('FLIP_URL', 'FLIP_URL', requiredInProduction),
       healthPath: '/health',
       namespace: 'hmpps-pin-phone',
     },
