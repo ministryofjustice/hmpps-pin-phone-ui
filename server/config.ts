@@ -115,7 +115,12 @@ export default {
         response: Number(get('PIN_PHONE_API_TIMEOUT_RESPONSE', 5000)),
         deadline: Number(get('PIN_PHONE_API_TIMEOUT_DEADLINE', 5000)),
       },
-      agent: new AgentConfig(Number(get('PIN_PHONE_API_TIMEOUT_RESPONSE', 5000))),
+      agent: new AgentConfig(Number(get('PIN_PHONE_API_TIMEOUT_RESPONSE', 50000))),
+    },
+    fliptClient: {
+      url: get('FLIP_URL', 'FLIP_URL', requiredInProduction),
+      healthPath: '/health',
+      namespace: 'hmpps-pin-phone',
     },
   },
   sqs: {

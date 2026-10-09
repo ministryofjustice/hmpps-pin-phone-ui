@@ -44,5 +44,10 @@ services:
       - LAUNCHPAD_AUTH_URL=http://hose.docker.internal:8080
       - LAUNCHPAD_AUTH_EXTERNAL_URL=http://localhost:8080
 
+  flipt:
+    image: docker.flipt.io/flipt/flipt:latest
+    ports:
+      - '9092:8080'
+
 networks:
   hmpps:
