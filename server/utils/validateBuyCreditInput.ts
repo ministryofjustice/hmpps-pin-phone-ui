@@ -18,7 +18,27 @@ const validateBuyCreditInput = (
   currentPinPhoneCreditPence: number,
   currentSpendsBalancePence: number,
   pinPhoneCreditLimitPence: number,
+  creditBuyCapacityPence: number,
 ): ValidationResult => {
+  if (creditBuyCapacityPence === 0) {
+    return {
+      errorList: [
+        {
+          href: '#amount',
+          text: ERROR_MESSAGE.CANNOT_PURCHASED_ADDITIONAL_CREDIT.replace(
+            '{limit}',
+            Number(toPounds(pinPhoneCreditLimitPence)).toString(),
+          ),
+        },
+      ],
+      amountError: {
+        text: ERROR_MESSAGE.CANNOT_PURCHASED_ADDITIONAL_CREDIT.replace(
+          '{limit}',
+          Number(toPounds(pinPhoneCreditLimitPence)).toString(),
+        ),
+      },
+    }
+  }
   // No radio button selected
   if (!requestedCreditAmountPounds) {
     return {

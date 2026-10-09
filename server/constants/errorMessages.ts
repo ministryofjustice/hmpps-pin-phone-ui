@@ -6,6 +6,8 @@ const ERROR_MESSAGE = {
   POLICY_EVALUATION_ERROR: 'Phone credit could not be added. Try again later.',
   MEDUSA_UNAVAILABLE_MESSAGE: 'Medusa service is currently unavailable',
   ENTRY_DENIED_ERROR_MESSAGE: 'You do not have access to this service.',
+  CANNOT_PURCHASED_ADDITIONAL_CREDIT:
+    'You already have the maximum allowed phone credit (£{limit}). You cannot purchase any additional credit.',
 }
 
 export default ERROR_MESSAGE

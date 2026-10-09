@@ -99,6 +99,7 @@ export default function buyPinPhoneCreditRoutes(
         balances.currentPinPhoneCreditPence,
         balances.currentSpendsBalancePence,
         balances.pinPhoneCreditLimitPence,
+        balances.creditBuyCapacityPence,
       )
 
       if (error.errorList.length > 0) {
