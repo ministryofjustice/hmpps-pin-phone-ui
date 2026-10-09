@@ -70,11 +70,17 @@ const validateBuyCreditInput = (
       errorList: [
         {
           href: '#amount',
-          text: ERROR_MESSAGE.CREDIT_LIMIT_EXCEEDED_ERROR.replace('{limit}', `${toPounds(pinPhoneCreditLimitPence)}`),
+          text: ERROR_MESSAGE.CREDIT_LIMIT_EXCEEDED_ERROR.replace(
+            '{limit}',
+            Number(toPounds(pinPhoneCreditLimitPence)).toString(),
+          ),
         },
       ],
       amountError: {
-        text: ERROR_MESSAGE.CREDIT_LIMIT_EXCEEDED_ERROR.replace('{limit}', `${toPounds(pinPhoneCreditLimitPence)}`),
+        text: ERROR_MESSAGE.CREDIT_LIMIT_EXCEEDED_ERROR.replace(
+          '{limit}',
+          Number(toPounds(pinPhoneCreditLimitPence)).toString(),
+        ),
       },
     }
   }
