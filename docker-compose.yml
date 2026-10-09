@@ -47,7 +47,7 @@ services:
   flipt:
     image: docker.flipt.io/flipt/flipt:latest
     ports:
-      - '9091:8080'
+      - '9092:8080'
 
 networks:
   hmpps:
