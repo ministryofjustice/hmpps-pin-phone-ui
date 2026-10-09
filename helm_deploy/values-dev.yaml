@@ -18,6 +18,7 @@ generic-service:
     ENVIRONMENT_NAME: DEV
     SHUTTER_ENABLED: "false"
     AUDIT_ENABLED: "false"
+    FLIP_URL: "https://feature-toggles-dev.hmpps.service.justice.gov.uk"
 
   allowlist:
     kpmg-pen-1: 195.68.59.72/29
