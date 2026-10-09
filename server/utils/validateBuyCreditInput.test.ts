@@ -43,7 +43,7 @@ describe('validateBuyCreditInput', () => {
 
     expect(result.errorList).toHaveLength(1)
     expect(result.amountError).toEqual({
-      text: ERROR_MESSAGE.CREDIT_LIMIT_EXCEEDED_ERROR,
+      text: 'You cannot have more than £19.00 phone credit. Enter a smaller amount.',
     })
   })
 

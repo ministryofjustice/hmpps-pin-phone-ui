@@ -121,7 +121,7 @@ describe('Validations GET /pin-phone/buy-credit', () => {
       amount: 'other',
       customAmount: '45',
     })
-    expect(response.text).toContain(ERROR_MESSAGE.CREDIT_LIMIT_EXCEEDED_ERROR)
+    expect(response.text).toContain('You cannot have more than £50.00 phone credit. Enter a smaller amount')
   })
 
   it('should add line item when valid amount is selected', async () => {

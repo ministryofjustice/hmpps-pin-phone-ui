@@ -1,5 +1,5 @@
 import ERROR_MESSAGE from '../constants/errorMessages'
-import { stringToPence } from './utils'
+import { stringToPence, toPounds } from './utils'
 
 type ValidationError = {
   href: string
@@ -70,11 +70,11 @@ const validateBuyCreditInput = (
       errorList: [
         {
           href: '#amount',
-          text: ERROR_MESSAGE.CREDIT_LIMIT_EXCEEDED_ERROR,
+          text: ERROR_MESSAGE.CREDIT_LIMIT_EXCEEDED_ERROR.replace('{limit}', `${toPounds(pinPhoneCreditLimitPence)}`),
         },
       ],
       amountError: {
-        text: ERROR_MESSAGE.CREDIT_LIMIT_EXCEEDED_ERROR,
+        text: ERROR_MESSAGE.CREDIT_LIMIT_EXCEEDED_ERROR.replace('{limit}', `${toPounds(pinPhoneCreditLimitPence)}`),
       },
     }
   }
