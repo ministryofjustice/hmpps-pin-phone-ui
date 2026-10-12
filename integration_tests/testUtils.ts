@@ -44,18 +44,31 @@ export const loginWithPrisonerAuth = async (
     tokenExpiresInSeconds = 9999,
     active = true,
     roles = DEFAULT_ROLES,
+    userId = 'A-BOOKING-ID',
+    givenName = 'Test',
+    familyName = 'User',
   }: {
     active?: boolean
     roles?: string[]
     name?: string
     establishmentCode?: string
     tokenExpiresInSeconds?: number
+    userId?: string
+    givenName?: string
+    familyName?: string
   } = {},
 ) => {
   await Promise.all([
     prisonerAuth.favicon(),
     prisonerAuth.stubSignInPage(),
-    prisonerAuth.token({ name, establishmentCode, expiresInSeconds: tokenExpiresInSeconds }),
+    prisonerAuth.token({
+      name,
+      establishmentCode,
+      expiresInSeconds: tokenExpiresInSeconds,
+      userId,
+      givenName,
+      familyName,
+    }),
     hmppsAuth.token({ name, roles, authSource: 'nomis' }),
     tokenVerification.stubVerifyToken(active),
   ])

@@ -5,6 +5,9 @@ export interface LaunchpadUserToken {
   name: string
   establishmentCode: string
   expiresInSeconds: number
+  userId?: string
+  givenName?: string
+  familyName?: string
 }
 
 function createRefreshOrAccessToken(userToken: LaunchpadUserToken) {
@@ -22,17 +25,17 @@ function createRefreshOrAccessToken(userToken: LaunchpadUserToken) {
 function createIdToken(userToken: LaunchpadUserToken) {
   const payload = {
     name: userToken.name,
-    given_name: '',
-    family_name: '',
+    given_name: userToken.givenName ?? 'Test',
+    family_name: userToken.familyName ?? 'User',
     iat: new Date().getTime(),
     aud: 'clientid',
-    sub: userToken.name, // The new prisoner auth extracts username from the sub claim
+    sub: userToken.userId ?? 'A-BOOKING-ID',
     exp: Date.now() / 1000 + userToken.expiresInSeconds,
     booking: {
-      id: 'A-BOOKING-ID',
+      id: userToken.userId ?? 'A-BOOKING-ID',
     },
     establishment: {
-      agency_id: 'CKI',
+      agency_id: userToken.establishmentCode ?? 'CKI',
     },
     iss: 'http://localhost:9091/launchpadauth',
   }
