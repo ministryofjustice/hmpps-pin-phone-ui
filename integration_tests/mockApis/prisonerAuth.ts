@@ -15,7 +15,7 @@ function createRefreshOrAccessToken(userToken: LaunchpadUserToken) {
     name: userToken.name,
     exp: Date.now() / 1000 + userToken.expiresInSeconds,
     scopes: ['user.basic.read', 'user.establishment.read', 'user.booking.read'],
-    iss: 'http://localhost:9091/launchpadauth',
+    iss: 'http://localhost:9091/prisoner-auth',
     jti: 'a610a10-cca6-41db-985f-e87efb303aaf',
     ati: 'a610a10-cca6-41db-985f-e87efb303aaf',
   }
@@ -37,7 +37,7 @@ function createIdToken(userToken: LaunchpadUserToken) {
     establishment: {
       agency_id: userToken.establishmentCode ?? 'CKI',
     },
-    iss: 'http://localhost:9091/launchpadauth',
+    iss: 'http://localhost:9091/prisoner-auth',
   }
   return jwt.sign(payload, 'secret')
 }
@@ -46,7 +46,7 @@ export default {
   getSignInUrl: (): Promise<string> =>
     getMatchingRequests({
       method: 'GET',
-      urlPath: '/launchpadauth/v1/oauth2/authorize',
+      urlPath: '/prisoner-auth/oauth2/authorize',
     }).then(data => {
       const { requests } = data.body
       const stateValue = requests[requests.length - 1].queryParams.state.values[0]
@@ -68,7 +68,7 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: '/launchpadauth/health/ping',
+        urlPattern: '/prisoner-auth/health/ping',
       },
       response: {
         status: 200,
@@ -80,7 +80,7 @@ export default {
       request: {
         method: 'GET',
         urlPattern:
-          '/launchpadauth/v1/oauth2/authorize\\?response_type=code&client_id=clientid&redirect_uri=.+?&scope=.+?&state=.+?',
+          '/prisoner-auth/oauth2/authorize\\?response_type=code&client_id=clientid&redirect_uri=.+?&scope=.+?&state=.+?',
       },
       response: {
         status: 200,
@@ -95,7 +95,7 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: '/launchpadauth/sign-out.*',
+        urlPattern: '/prisoner-auth/sign-out.*',
       },
       response: {
         status: 200,
@@ -110,7 +110,7 @@ export default {
     stubFor({
       request: {
         method: 'POST',
-        urlPattern: '/launchpadauth/v1/oauth2/token',
+        urlPattern: '/prisoner-auth/oauth2/token',
       },
       response: {
         status: 200,

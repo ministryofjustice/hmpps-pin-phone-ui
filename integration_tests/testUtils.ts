@@ -31,7 +31,7 @@ export const loginWithHmppsAuth = async (
 
 export const attemptPrisonerAuthLogin = async (page: Page) => {
   await page.goto('/')
-  await page.waitForURL('**/launchpadauth/v1/oauth2/authorize**')
+  await page.waitForURL('**/prisoner-auth/oauth2/authorize**')
   const url = await prisonerAuth.getSignInUrl()
   await page.goto(url)
 }
@@ -44,31 +44,18 @@ export const loginWithPrisonerAuth = async (
     tokenExpiresInSeconds = 9999,
     active = true,
     roles = DEFAULT_ROLES,
-    userId = 'A-BOOKING-ID',
-    givenName = 'Test',
-    familyName = 'User',
   }: {
     active?: boolean
     roles?: string[]
     name?: string
     establishmentCode?: string
     tokenExpiresInSeconds?: number
-    userId?: string
-    givenName?: string
-    familyName?: string
   } = {},
 ) => {
   await Promise.all([
     prisonerAuth.favicon(),
     prisonerAuth.stubSignInPage(),
-    prisonerAuth.token({
-      name,
-      establishmentCode,
-      expiresInSeconds: tokenExpiresInSeconds,
-      userId,
-      givenName,
-      familyName,
-    }),
+    prisonerAuth.token({ name, establishmentCode, expiresInSeconds: tokenExpiresInSeconds }),
     hmppsAuth.token({ name, roles, authSource: 'nomis' }),
     tokenVerification.stubVerifyToken(active),
   ])
