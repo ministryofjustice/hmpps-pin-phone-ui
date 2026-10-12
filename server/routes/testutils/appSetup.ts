@@ -29,24 +29,47 @@ const testAppInfo: ApplicationInfo = {
   branchName: 'main',
 }
 
-export const user: HmppsUser = {
-  name: 'FIRST LAST',
+export const idToken = {
+  name: 'name',
+  given_name: 'FIRST',
+  family_name: 'LAST',
+  nonce: 'a nonce',
+  iat: 123456,
+  aud: 'aud',
+  sub: 'sub',
+  exp: 769012,
+  booking: {
+    id: '12345',
+  },
+  establishment: {
+    id: '34567',
+    agency_id: 'HEI',
+    name: 'name',
+    display_name: 'display name',
+    youth: false,
+  },
+  iss: 'iss',
+}
+
+export const user: LaunchpadUser = {
+  refreshToken: 'REFRESH_TOKEN',
+  idToken,
+  accessToken: 'ACCESS_TOKEN',
+  token: 'ACCESS_TOKEN',
+  authSource: 'prisoner-auth',
+  name: '',
+  username: '',
   userId: 'id',
-  token: 'token',
-  username: 'user1',
-  displayName: 'First Last',
-  authSource: 'nomis',
-  staffId: 1234,
+  userUuid: undefined,
+  displayName: '',
   userRoles: [],
   establishment: {
     agency_id: 'HEI',
-    name: 'Hewell',
-    display_name: 'Hewell',
+    name: 'name',
+    display_name: 'display name',
     youth: false,
   },
-  givenName: 'FIRST',
-  familyName: 'LAST',
-} as PrisonUser | LaunchpadUser
+}
 
 export const flashProvider = jest.fn()
 

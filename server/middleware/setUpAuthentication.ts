@@ -26,6 +26,27 @@ const prisonerAuth = new PrisonerAuth({
 
 passport.use('prisoner-auth', prisonerAuth.passportStrategy())
 
+const idToken = {
+  name: 'name',
+  given_name: 'given name',
+  family_name: 'family name',
+  nonce: 'a nonce',
+  iat: 123456,
+  aud: 'aud',
+  sub: 'sub',
+  exp: 769012,
+  booking: {
+    id: '12345',
+  },
+  establishment: {
+    id: '34567',
+    agency_id: '67890',
+    name: 'name',
+    display_name: 'display name',
+    youth: false,
+  },
+  iss: 'iss',
+}
 export default function setUpPrisonerAuth() {
   const router = Router()
 
@@ -38,8 +59,7 @@ export default function setUpPrisonerAuth() {
         authSource: 'prisoner-auth',
         token: 'fake-token',
         displayName: 'Dev User',
-        givenName: 'John',
-        familyName: 'Doe',
+        idToken,
         userId: 'G3682UE',
 
         userRoles: [],
