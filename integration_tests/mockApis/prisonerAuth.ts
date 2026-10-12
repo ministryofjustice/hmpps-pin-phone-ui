@@ -20,27 +20,23 @@ function createRefreshOrAccessToken(userToken: LaunchpadUserToken) {
 }
 
 function createIdToken(userToken: LaunchpadUserToken) {
-  const names = (userToken.name || '').split(' ')
-  const givenName = names[0] || ''
-  const familyName = names.slice(1).join(' ') || ''
-
   const payload = {
     name: userToken.name,
-    displayName: userToken.name,
-    display_name: userToken.name,
-    preferred_username: userToken.name,
-    unique_name: userToken.name,
-    given_name: givenName,
-    family_name: familyName,
-    iat: Math.floor(Date.now() / 1000),
+    username: userToken.name,
+    given_name: '',
+    family_name: '',
+    iat: new Date().getTime(),
     aud: 'clientid',
-    sub: 'G3682UE',
+    sub: 'A-BOOKING-ID',
     exp: Date.now() / 1000 + userToken.expiresInSeconds,
-    booking: { id: 'A-BOOKING-ID' },
-    establishment: { agency_id: 'CKI' },
+    booking: {
+      id: 'A-BOOKING-ID',
+    },
+    establishment: {
+      agency_id: 'CKI',
+    },
     iss: 'http://localhost:9091/launchpadauth',
   }
-
   return jwt.sign(payload, 'secret')
 }
 
