@@ -26,7 +26,7 @@ function createIdToken(userToken: LaunchpadUserToken) {
     family_name: '',
     iat: new Date().getTime(),
     aud: 'clientid',
-    sub: 'A-BOOKING-ID',
+    sub: userToken.name, // The new prisoner auth extracts username from the sub claim
     exp: Date.now() / 1000 + userToken.expiresInSeconds,
     booking: {
       id: 'A-BOOKING-ID',

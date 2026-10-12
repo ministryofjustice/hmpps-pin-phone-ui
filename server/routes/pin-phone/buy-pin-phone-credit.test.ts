@@ -60,7 +60,7 @@ describe('GET /pin-phone/buy-credit', () => {
 
     const createCartRequest: CreateCartRequest = {
       metadata: {
-        prison_id: '67890',
+        prison_id: 'HEI',
         offender_no: 'id',
         first_name: 'given name',
         second_name: 'family name',
