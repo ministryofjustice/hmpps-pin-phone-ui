@@ -34,7 +34,7 @@ function createIdToken(userToken: LaunchpadUserToken) {
     establishment: {
       agency_id: 'CKI',
     },
-    iss: 'http://localhost:9091/prisoner-auth',
+    iss: 'http://localhost:9091/launchpadauth',
   }
   return jwt.sign(payload, 'secret')
 }
@@ -43,7 +43,7 @@ export default {
   getSignInUrl: (): Promise<string> =>
     getMatchingRequests({
       method: 'GET',
-      urlPath: '/prisoner-auth/oauth2/authorize',
+      urlPath: '/launchpadauth/v1/oauth2/authorize',
     }).then(data => {
       const { requests } = data.body
       const stateValue = requests[requests.length - 1].queryParams.state.values[0]
@@ -65,7 +65,7 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: '/prisoner-auth/health/ping',
+        urlPattern: '/launchpadauth/health/ping',
       },
       response: {
         status: 200,
