@@ -60,10 +60,10 @@ describe('GET /pin-phone/buy-credit', () => {
 
     const createCartRequest: CreateCartRequest = {
       metadata: {
-        prison_id: 'HEI',
+        prison_id: '67890',
         offender_no: 'id',
-        first_name: 'FIRST',
-        second_name: 'LAST',
+        first_name: 'given name',
+        second_name: 'family name',
       },
     }
     expect(pinPhoneService.createCart).toHaveBeenCalledWith(createCartRequest)

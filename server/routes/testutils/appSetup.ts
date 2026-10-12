@@ -20,6 +20,48 @@ jest.mock('../../services/auditService')
 jest.mock('../../data/digitalPinPhoneApiClient')
 jest.mock('../../services/telemetryService')
 
+export const idToken = {
+  name: 'name',
+  given_name: 'given name',
+  family_name: 'family name',
+  nonce: 'a nonce',
+  iat: 123456,
+  aud: 'aud',
+  sub: 'sub',
+  exp: 769012,
+  booking: {
+    id: '12345',
+  },
+  establishment: {
+    id: '34567',
+    agency_id: '67890',
+    name: 'name',
+    display_name: 'display name',
+    youth: false,
+  },
+  iss: 'iss',
+}
+
+export const user: LaunchpadUser = {
+  refreshToken: 'REFRESH_TOKEN',
+  idToken,
+  accessToken: 'ACCESS_TOKEN',
+  token: 'ACCESS_TOKEN',
+  authSource: 'prisoner-auth',
+  name: '',
+  username: '',
+  userId: 'id',
+  userUuid: undefined,
+  displayName: '',
+  userRoles: [],
+  establishment: {
+    agency_id: '67890',
+    name: 'name',
+    display_name: 'display name',
+    youth: false,
+  },
+}
+
 const testAppInfo: ApplicationInfo = {
   applicationName: 'test',
   buildNumber: '1',
@@ -28,26 +70,6 @@ const testAppInfo: ApplicationInfo = {
   productId: '1',
   branchName: 'main',
 }
-
-export const user: HmppsUser = {
-  name: 'FIRST LAST',
-  userId: 'id',
-  token: 'token',
-  username: 'user1',
-  userUuid: '11111111-1111-1111-1111-111111111111',
-  displayName: 'First Last',
-  authSource: 'nomis',
-  staffId: 1234,
-  userRoles: [],
-  establishment: {
-    agency_id: 'HEI',
-    name: 'Hewell',
-    display_name: 'Hewell',
-    youth: false,
-  },
-  givenName: 'FIRST',
-  familyName: 'LAST',
-} as PrisonUser | LaunchpadUser
 
 export const flashProvider = jest.fn()
 
