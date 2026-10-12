@@ -22,4 +22,4 @@ generic-service:
 
 generic-prometheus-alerts:
   businessHoursOnly: true
-  alertSeverity: hmpps-pin-phone-dev
+
