@@ -27,11 +27,14 @@ function createIdToken(userToken: LaunchpadUserToken) {
   const payload = {
     name: userToken.name,
     displayName: userToken.name,
+    display_name: userToken.name,
+    preferred_username: userToken.name,
+    unique_name: userToken.name,
     given_name: givenName,
     family_name: familyName,
     iat: Math.floor(Date.now() / 1000),
     aud: 'clientid',
-    sub: 'A-BOOKING-ID',
+    sub: 'G3682UE',
     exp: Date.now() / 1000 + userToken.expiresInSeconds,
     booking: { id: 'A-BOOKING-ID' },
     establishment: { agency_id: 'CKI' },
@@ -40,6 +43,7 @@ function createIdToken(userToken: LaunchpadUserToken) {
 
   return jwt.sign(payload, 'secret')
 }
+
 export default {
   getSignInUrl: (): Promise<string> =>
     getMatchingRequests({
