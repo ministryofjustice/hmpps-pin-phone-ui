@@ -31,7 +31,7 @@ export const loginWithHmppsAuth = async (
 
 export const attemptPrisonerAuthLogin = async (page: Page) => {
   await page.goto('/')
-  await page.waitForURL('**/prisoner-auth/oauth2/authorize**')
+  await page.waitForURL('**/launchpadauth/v1/oauth2/authorize**')
   const url = await prisonerAuth.getSignInUrl()
   await page.goto(url)
 }

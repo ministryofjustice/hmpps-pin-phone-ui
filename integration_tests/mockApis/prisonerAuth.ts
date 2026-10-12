@@ -5,9 +5,6 @@ export interface LaunchpadUserToken {
   name: string
   establishmentCode: string
   expiresInSeconds: number
-  userId?: string
-  givenName?: string
-  familyName?: string
 }
 
 function createRefreshOrAccessToken(userToken: LaunchpadUserToken) {
@@ -15,7 +12,7 @@ function createRefreshOrAccessToken(userToken: LaunchpadUserToken) {
     name: userToken.name,
     exp: Date.now() / 1000 + userToken.expiresInSeconds,
     scopes: ['user.basic.read', 'user.establishment.read', 'user.booking.read'],
-    iss: 'http://localhost:9091/prisoner-auth',
+    iss: 'http://localhost:9091/launchpadauth',
     jti: 'a610a10-cca6-41db-985f-e87efb303aaf',
     ati: 'a610a10-cca6-41db-985f-e87efb303aaf',
   }
@@ -25,17 +22,17 @@ function createRefreshOrAccessToken(userToken: LaunchpadUserToken) {
 function createIdToken(userToken: LaunchpadUserToken) {
   const payload = {
     name: userToken.name,
-    given_name: userToken.givenName ?? 'Test',
-    family_name: userToken.familyName ?? 'User',
+    given_name: '',
+    family_name: '',
     iat: new Date().getTime(),
     aud: 'clientid',
-    sub: userToken.userId ?? 'A-BOOKING-ID',
+    sub: 'A-BOOKING-ID',
     exp: Date.now() / 1000 + userToken.expiresInSeconds,
     booking: {
-      id: userToken.userId ?? 'A-BOOKING-ID',
+      id: 'A-BOOKING-ID',
     },
     establishment: {
-      agency_id: userToken.establishmentCode ?? 'CKI',
+      agency_id: 'CKI',
     },
     iss: 'http://localhost:9091/prisoner-auth',
   }
@@ -80,7 +77,7 @@ export default {
       request: {
         method: 'GET',
         urlPattern:
-          '/prisoner-auth/oauth2/authorize\\?response_type=code&client_id=clientid&redirect_uri=.+?&scope=.+?&state=.+?',
+          '/launchpadauth/v1/oauth2/authorize\\?response_type=code&client_id=clientid&redirect_uri=.+?&scope=.+?&state=.+?',
       },
       response: {
         status: 200,
@@ -95,7 +92,7 @@ export default {
     stubFor({
       request: {
         method: 'GET',
-        urlPattern: '/prisoner-auth/sign-out.*',
+        urlPattern: '/launchpadauth/sign-out.*',
       },
       response: {
         status: 200,
@@ -110,7 +107,7 @@ export default {
     stubFor({
       request: {
         method: 'POST',
-        urlPattern: '/prisoner-auth/oauth2/token',
+        urlPattern: '/launchpadauth/v1/oauth2/token',
       },
       response: {
         status: 200,
