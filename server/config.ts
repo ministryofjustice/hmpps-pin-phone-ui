@@ -101,10 +101,10 @@ export default {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
       healthPath: '/health/ping',
       timeout: {
-        response: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 50000)),
-        deadline: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_DEADLINE', 50000)),
+        response: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 5000)),
+        deadline: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_DEADLINE', 5000)),
       },
-      agent: new AgentConfig(Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 50000))),
+      agent: new AgentConfig(Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 5000))),
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
 
@@ -112,10 +112,10 @@ export default {
       url: get('PIN_PHONE_API_URL', 'http://localhost:8080', requiredInProduction),
       healthPath: '/health/ping',
       timeout: {
-        response: Number(get('PIN_PHONE_API_TIMEOUT_RESPONSE', 50000)),
-        deadline: Number(get('PIN_PHONE_API_TIMEOUT_DEADLINE', 50000)),
+        response: Number(get('PIN_PHONE_API_TIMEOUT_RESPONSE', 5000)),
+        deadline: Number(get('PIN_PHONE_API_TIMEOUT_DEADLINE', 5000)),
       },
-      agent: new AgentConfig(Number(get('PIN_PHONE_API_TIMEOUT_RESPONSE', 500000))),
+      agent: new AgentConfig(Number(get('PIN_PHONE_API_TIMEOUT_RESPONSE', 5000))),
     },
     fliptClient: {
       url: get('FLIP_URL', 'FLIP_URL', requiredInProduction),
