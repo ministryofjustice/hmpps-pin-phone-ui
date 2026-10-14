@@ -57,8 +57,6 @@ export default function buyPinPhoneCreditRoutes(
         metadata: {
           prison_id: user.establishment.agency_id,
           offender_no: user.userId,
-          first_name: user.givenName,
-          second_name: user.familyName,
         },
       }
       const result = await pinPhoneService.createCart(createCartRequest)

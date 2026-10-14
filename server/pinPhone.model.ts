@@ -2,8 +2,6 @@ export interface CreateCartRequest {
   metadata: {
     prison_id: string
     offender_no: string
-    first_name: string
-    second_name: string
   }
 }
 
