@@ -1,3 +1,4 @@
+import { UUID } from 'crypto'
 import { LaunchpadUser } from '@ministryofjustice/hmpps-prisoner-auth'
 
 export type AuthSource = 'nomis' | 'delius' | 'external' | 'azuread' | 'prisoner-auth'
@@ -9,6 +10,7 @@ export interface BaseUser {
   authSource: AuthSource
   username: string
   userId: string | undefined
+  userUuid: UUID | undefined // This is a UUID created by HMPPS Auth upon first user login that is unique to the user across all authSources
   name: string | undefined
   displayName: string
   userRoles: string[]
