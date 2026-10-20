@@ -62,8 +62,6 @@ describe('GET /pin-phone/buy-credit', () => {
       metadata: {
         prison_id: 'HEI',
         offender_no: 'id',
-        first_name: 'FIRST',
-        second_name: 'LAST',
       },
     }
     expect(pinPhoneService.createCart).toHaveBeenCalledWith(createCartRequest)

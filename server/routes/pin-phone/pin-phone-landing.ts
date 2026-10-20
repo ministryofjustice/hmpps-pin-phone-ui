@@ -17,7 +17,7 @@ export default function pinPhoneRoutes(
     delete req.session.amountType
 
     const user = req.user as LaunchpadUser
-    const userName = user.username
+    const userName = user.idToken.name
     telemetryService.trackEvent('PIN_PHONE_LANDING', user, {
       prisonCode: user.establishment.agency_id,
     })
