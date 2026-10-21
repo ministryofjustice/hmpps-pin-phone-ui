@@ -36,14 +36,14 @@ And then, to build the assets and start the app with esbuild:
 
 `npm run start:dev`
 
-### Logging in with a test user
-
+### Running the application in Intellij and Logging in with a test user
 Application uses Launchpad auth.
-Running locally login can be bypassed with
+DEV prisoner can be used for the local testing.
+Add following into .env for local testing. Get the Launchpad secrets from DEV namespace.
 
-    BYPASS_AUTH=true
-
-Or an example DEV prisoner can be used if set up for Launchpad.
+    LAUNCHPAD_API_CLIENT_ID={id}
+    LAUNCHPAD_API_CLIENT_SECRET={secret}
+    LAUNCHPAD_AUTH_URL={lp_auth_dev_url}
 
 ### Installing dependencies
 
