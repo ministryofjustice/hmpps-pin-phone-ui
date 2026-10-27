@@ -17,7 +17,7 @@ generic-service:
     PIN_PHONE_API_URL: "https://pin-phone-dev.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: DEV
     SHUTTER_ENABLED: "false"
-    AUDIT_ENABLED: "false"
+    AUDIT_ENABLED: "true"
     FLIP_URL: "https://feature-toggles-dev.hmpps.service.justice.gov.uk"
 
   allowlist:
@@ -27,4 +27,3 @@ generic-service:
 
 generic-prometheus-alerts:
   businessHoursOnly: true
-
