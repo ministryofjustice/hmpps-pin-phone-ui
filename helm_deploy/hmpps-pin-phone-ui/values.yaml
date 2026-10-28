@@ -38,8 +38,8 @@ generic-service:
     REDIS_ENABLED: 'true'
     REDIS_TLS_ENABLED: 'true'
     TOKEN_VERIFICATION_ENABLED: 'true'
-    AUDIT_SQS_REGION: 'eu-west-2'
-    AUDIT_SERVICE_NAME: 'DPS128' # Your audit service name
+    AUDIT_SERVICE_NAME: 'hmpps-pin-phone-ui'
+    AUDIT_SQS_REGION: 'eu-west-2' # Your audit service name
 
   # Pre-existing kubernetes secrets to load as environment variables in the deployment.
   # namespace_secrets:
