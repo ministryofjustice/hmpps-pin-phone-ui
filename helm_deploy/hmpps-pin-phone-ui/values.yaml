@@ -3,7 +3,7 @@ generic-service:
   productId: 'DPS128' # productId for the product that this belongs too, i.e. DPS001, see README.md for details
 
   # the IRSA service account name for accessing AWS resources
-  # serviceAccountName: "hmpps-pin-phone-ui"
+  serviceAccountName: "hmpps-pin-phone-ui"
 
   replicaCount: 1
 
