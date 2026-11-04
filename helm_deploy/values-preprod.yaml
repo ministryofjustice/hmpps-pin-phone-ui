@@ -17,9 +17,8 @@ generic-service:
     PIN_PHONE_API_URL: "https://pin-phone-preprod.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: PREPROD
     SHUTTER_ENABLED: "true"
-    AUDIT_ENABLED: "false"
+    AUDIT_ENABLED: "true"
     FLIP_URL: "https://feature-toggles-preprod.hmpps.service.justice.gov.uk"
 
 generic-prometheus-alerts:
   businessHoursOnly: true
-
