@@ -56,6 +56,19 @@ test.describe('Buy PIN phone credit page', () => {
 
     test('should display custom amount input', async ({ page }) => {
       const buyPage = await BuyPinPhoneCreditPage.verifyOnPage(page)
+      const radios = buyPage.amountRadios
+      await expect(radios).toHaveCount(5)
+      await expect(radios.nth(4)).toContainText('Enter your own amount')
+    })
+
+    test('should display custom amount input when "Enter your own amount" is selected', async ({ page }) => {
+      const buyPage = await BuyPinPhoneCreditPage.verifyOnPage(page)
+      const radios = buyPage.amountRadios
+
+      await expect(radios).toHaveCount(5)
+      await expect(radios.nth(4)).toContainText('Enter your own amount')
+      await expect(buyPage.customAmountInput).not.toBeVisible()
+      await radios.nth(4).locator('input[type="radio"]').check()
       await expect(buyPage.customAmountInput).toBeVisible()
     })
 
