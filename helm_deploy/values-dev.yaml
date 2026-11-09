@@ -24,7 +24,8 @@ generic-service:
     kpmg-pen-1: 195.68.59.72/29
     groups:
       - internal
+      - prisons
+      - prisoner_facing_services
 
 generic-prometheus-alerts:
   businessHoursOnly: true
-

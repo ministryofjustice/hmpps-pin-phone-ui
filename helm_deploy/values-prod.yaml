@@ -19,3 +19,9 @@ generic-service:
     SHUTTER_ENABLED: "true"
     AUDIT_ENABLED: "false"
     FLIP_URL: "https://feature-toggles.hmpps.service.justice.gov.uk"
+
+  allowlist:
+    groups:
+      - internal
+      - prisons
+      - prisoner_facing_services
