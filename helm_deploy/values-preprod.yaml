@@ -20,11 +20,5 @@ generic-service:
     AUDIT_ENABLED: "false"
     FLIP_URL: "https://feature-toggles-preprod.hmpps.service.justice.gov.uk"
 
-  allowlist:
-    groups:
-      - internal
-      - prisons
-      - prisoner_facing_services
-
 generic-prometheus-alerts:
   businessHoursOnly: true
