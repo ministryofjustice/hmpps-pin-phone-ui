@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/prefer-default-export
 export const PATHS = {
   LANDING_PAGE: '/pin-phone',
+  STAFF_LANDING_PAGE: '/staff-pin-phone',
   BUY_CREDIT: '/pin-phone/buy-credit',
   CHECK_ORDER_DETAILS: '/pin-phone/check-order-details',
   VIEW_CONTACTS: '/pin-phone/view-contacts',

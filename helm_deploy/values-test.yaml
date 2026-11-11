@@ -5,7 +5,9 @@ generic-service:
   replicaCount: 1
 
   ingress:
-    host: pin-phone-ui-test.hmpps.service.justice.gov.uk
+    host:
+      - pin-phone-ui-test.hmpps.service.justice.gov.uk
+      - staff.pin-phone-ui-test.hmpps.service.justice.gov.uk
 
   env:
     INGRESS_URL: "https://pin-phone-ui-test.hmpps.service.justice.gov.uk"
@@ -22,4 +24,3 @@ generic-service:
 
 generic-prometheus-alerts:
   businessHoursOnly: true
-
