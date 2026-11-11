@@ -17,5 +17,5 @@ generic-service:
     PIN_PHONE_API_URL: "https://pin-phone.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: PROD
     SHUTTER_ENABLED: "true"
-    AUDIT_ENABLED: "false"
+    AUDIT_ENABLED: "true"
     FLIP_URL: "https://feature-toggles.hmpps.service.justice.gov.uk"
