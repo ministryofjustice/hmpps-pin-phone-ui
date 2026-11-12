@@ -1,33 +1,36 @@
 import { test, expect } from '@playwright/test'
-import { loginWithPrisonerAuth } from '../../../testUtils'
-import PinPhoneLandingPage from '../../../pages/pin-phone/pinPhoneLandingPage'
+import { loginWithHmppsAuth } from '../../../testUtils'
 import config from '../../../../server/config'
+import StaffPinPhoneLandingPage from '../../../pages/pin-phone/staff/staffPinPhoneLandingPage'
 
-test.describe('Pin Phone home page', () => {
+// test.describe('Pin Phone home page', () => {
+//   test.beforeEach(async ({ page }) => {
+//     await loginWithPrisonerAuth(page)
+//     await page.goto('/pin-phone')
+//   })
+
+test.describe('Staff landing home page', () => {
+  test.use({
+    baseURL: 'http://staff.localhost:3007',
+  })
+
   test.beforeEach(async ({ page }) => {
-    await loginWithPrisonerAuth(page)
-    await page.goto('/pin-phone')
+    await loginWithHmppsAuth(page, { name: 'A TestUser' })
+    await page.goto('/staff-pinphone')
   })
 
   test('can see page heading with username', async ({ page }) => {
-    await PinPhoneLandingPage.verifyOnPage(page)
-    await expect(page.locator('h1')).toContainText("A TestUser's PIN phone")
+    await StaffPinPhoneLandingPage.verifyOnPage(page)
+    await expect(page.locator('h1')).toContainText('Pin Phone')
   })
 
   test('can see buy credit card', async ({ page }) => {
-    const pinPhonePage = await PinPhoneLandingPage.verifyOnPage(page)
-    await expect(pinPhonePage.buyCreditsLink()).toHaveAttribute('href', '/pin-phone/buy-credit')
-    await expect(pinPhonePage.buyCreditsCard).toContainText('Buy PIN phone credit')
-  })
-
-  test('can see view contacts card', async ({ page }) => {
-    const pinPhonePage = await PinPhoneLandingPage.verifyOnPage(page)
-    await expect(pinPhonePage.viewContactsLink()).toHaveAttribute('href', '/pin-phone/view-contacts')
-    await expect(pinPhonePage.viewContactsCard).toContainText('View your approved and pending contacts')
+    const staffPinPhonePage = await StaffPinPhoneLandingPage.verifyOnPage(page)
+    await expect(staffPinPhonePage.staffCard).toContainText('STAFF')
   })
 
   test('link to home', async ({ page }) => {
-    const pinPhonePage = await PinPhoneLandingPage.verifyOnPage(page)
-    await expect(pinPhonePage.breadcrumbHome).toHaveAttribute('href', config.launchpadHome)
+    const staffPinPhonePage = await StaffPinPhoneLandingPage.verifyOnPage(page)
+    await expect(staffPinPhonePage.breadcrumbHome).toHaveAttribute('href', config.launchpadHome)
   })
 })
