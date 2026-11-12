@@ -2,5 +2,8 @@
   "low": true,
   "package-manager": "auto",
   "registry": "https://registry.npmjs.org",
-  "allowlist": []
+  "allowlist": [
+    "GHSA-g3hv-75wg-m249",
+    "GHSA-gcqx-w48m-w2h4"
+  ]
 }
