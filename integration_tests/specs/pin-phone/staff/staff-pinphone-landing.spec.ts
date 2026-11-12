@@ -5,7 +5,7 @@ import StaffPinPhoneLandingPage from '../../../pages/pin-phone/staff/staffPinPho
 
 test.describe('Staff landing home page', () => {
   test.use({
-    baseURL: 'http://staff.localhost:3007',
+    baseURL: 'http://localhost:3007',
   })
 
   test.beforeEach(async ({ page }) => {
