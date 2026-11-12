@@ -1,20 +1,16 @@
 import { test, expect } from '@playwright/test'
-import { loginWithHmppsAuth } from '../../../testUtils'
+import { loginWithPrisonerAuth } from '../../../testUtils'
+import PinPhoneLandingPage from '../../../pages/pin-phone/pinPhoneLandingPage'
 import config from '../../../../server/config'
-import StaffPinPhoneLandingPage from '../../../pages/pin-phone/staff/staffPinPhoneLandingPage'
 
-test.describe('Staff landing home page', () => {
-  test.use({
-    baseURL: 'http://localhost:3007',
-  })
-
+test.describe('Pin Phone home page', () => {
   test.beforeEach(async ({ page }) => {
-    await loginWithHmppsAuth(page, { name: 'A TestUser' })
-    await page.goto('/staff-pinphone')
+    await loginWithPrisonerAuth(page)
+    await page.goto('/pin-phone')
   })
 
   test('link to home', async ({ page }) => {
-    const staffPinPhonePage = await StaffPinPhoneLandingPage.verifyOnPage(page)
-    await expect(staffPinPhonePage.breadcrumbHome).toHaveAttribute('href', config.launchpadHome)
+    const pinPhonePage = await PinPhoneLandingPage.verifyOnPage(page)
+    await expect(pinPhonePage.breadcrumbHome).toHaveAttribute('href', config.launchpadHome)
   })
 })
