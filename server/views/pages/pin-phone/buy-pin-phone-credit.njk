@@ -118,12 +118,15 @@
                 checked: amountType == '5'
               },
               {
-                divider: "Or enter your own amount. For example, for £1, enter 1.00 or for 70p, enter 0.70"
+                divider: "Or"
               },
               {
                 value: "other",
-                html: otherAmount,
-                checked: amountType == 'other'
+                html: "Enter your own amount",
+                checked: amountType == 'other',
+                conditional: {
+                  html: "For example, for £1, enter 1.00 or for 70p, enter 0.70<br>" ~ otherAmount
+                }
               }
             ]
           }) }}
