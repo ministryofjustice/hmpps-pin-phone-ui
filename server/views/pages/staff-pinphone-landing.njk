@@ -1,14 +1,13 @@
-
-+29
-Lines changed: 29 additions & 0 deletions
-Original file line number	Diff line number	Diff line change
 {% extends "../partials/layout.njk" %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
 {% set homeLinkHref = launchpadHome %}
 {% set pageTitle = userName + "'s Pin Phone" %}
+
 {% block pageTitle %}
   {{ pageTitle }} - GOV.UK
 {% endblock %}
+
 {% block content %}
   <h1 class="govuk-heading-l">{{ pageTitle }}</h1>
   <div class="app-card-group govuk-!-margin-bottom-6 govuk-!-margin-top-0 govuk-!-padding-top-0"">

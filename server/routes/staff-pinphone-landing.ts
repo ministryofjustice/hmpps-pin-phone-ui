@@ -22,8 +22,6 @@ export default function staffPinPhoneRoutes(
 
     return res.render('pages/staff-pinphone-landing', {
       userName,
-      buyCreditsUrl: PATHS.BUY_CREDIT,
-      viewContactsUrl: PATHS.VIEW_CONTACTS,
     })
   })
 
