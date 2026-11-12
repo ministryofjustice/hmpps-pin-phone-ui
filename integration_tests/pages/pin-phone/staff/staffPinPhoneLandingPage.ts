@@ -17,7 +17,7 @@ export default class PinPhoneLandingPage extends AbstractPage {
 
   static async verifyOnPage(page: Page): Promise<PinPhoneLandingPage> {
     const pinPhonePage = new PinPhoneLandingPage(page)
-    await expect(pinPhonePage.header).toContainText('STAFF')
+    await expect(pinPhonePage.header).toContainText('PIN phone')
     return pinPhonePage
   }
 
