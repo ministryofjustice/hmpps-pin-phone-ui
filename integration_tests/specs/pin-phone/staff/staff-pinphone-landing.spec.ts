@@ -3,12 +3,6 @@ import { loginWithHmppsAuth } from '../../../testUtils'
 import config from '../../../../server/config'
 import StaffPinPhoneLandingPage from '../../../pages/pin-phone/staff/staffPinPhoneLandingPage'
 
-// test.describe('Pin Phone home page', () => {
-//   test.beforeEach(async ({ page }) => {
-//     await loginWithPrisonerAuth(page)
-//     await page.goto('/pin-phone')
-//   })
-
 test.describe('Staff landing home page', () => {
   test.use({
     baseURL: 'http://staff.localhost:3007',
