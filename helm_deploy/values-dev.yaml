@@ -5,7 +5,9 @@ generic-service:
   replicaCount: 1
 
   ingress:
-    host: pin-phone-ui-dev.hmpps.service.justice.gov.uk
+    hosts:
+      - pin-phone-ui-dev.hmpps.service.justice.gov.uk
+      - staff.pin-phone-ui-dev.hmpps.service.justice.gov.uk
 
   env:
     INGRESS_URL: "https://pin-phone-ui-dev.hmpps.service.justice.gov.uk"
