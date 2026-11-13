@@ -49,7 +49,7 @@
 
             if (envelope && (envelope.baseType === "EventData" || envelope.baseType === "PageviewData")) {
                envelope.baseData.properties = envelope.baseData.properties || {};
-               envelope.baseData.properties.id = '{{ user.userUuid | default("") | safe }}';
+               envelope.baseData.properties.userUuid = '{{ user.userUuid | default("") | safe }}';
                envelope.baseData.properties.caseloadId = '{{ user.establishment.agency_id | default("") | safe }}';
               }
             });
