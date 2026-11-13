@@ -8,7 +8,7 @@ export default class TelemetryService {
       const attributes = Object.fromEntries(
         Object.entries({
           ...properties,
-          username: user.username,
+          userUuid: user.userUuid,
         }).filter(([, value]) => value !== null && value !== undefined),
       )
       telemetry.trackEvent(name, attributes)

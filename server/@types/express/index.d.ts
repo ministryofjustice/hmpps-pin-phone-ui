@@ -16,6 +16,7 @@ export declare global {
   namespace Express {
     interface User {
       username: string
+      userUuid: string
       token: string
       authSource: string
     }

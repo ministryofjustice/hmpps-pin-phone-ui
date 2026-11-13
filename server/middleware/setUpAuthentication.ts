@@ -1,3 +1,5 @@
+import { UUID } from 'crypto'
+import { jwtDecode } from 'jwt-decode'
 import passport from 'passport'
 import flash from 'connect-flash'
 import { Router } from 'express'
@@ -72,7 +74,8 @@ export default function setUpPrisonerAuth() {
   })
 
   router.use((req, res, next) => {
-    res.locals.user = req.user as HmppsUser
+    const { user_uuid: userUuid } = jwtDecode<{ user_uuid?: UUID }>(req.user.token)
+    res.locals.user = { ...req.user, userUuid } as HmppsUser
     next()
   })
 
