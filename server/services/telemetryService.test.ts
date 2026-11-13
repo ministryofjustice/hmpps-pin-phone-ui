@@ -26,7 +26,7 @@ describe('telemetryService', () => {
     expect(trackEvent).toHaveBeenCalledWith('FOO', {
       foo: 'bar',
       x: 0,
-      username: 'username',
+      userUuid: '11111111-1111-1111-1111-111111111111',
     })
   })
 
