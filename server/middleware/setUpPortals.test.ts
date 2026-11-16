@@ -5,7 +5,7 @@ const newRes = () => ({ locals: {}, status: jest.fn().mockReturnThis(), render: 
 
 describe('setupPortals middleware', () => {
   describe('when the user is on the staff portal', () => {
-    const hostname = 'staff.pin-phone-ui-dev.hmpps.service.justice.gov.uk'
+    const hostname = 'staff-pin-phone-ui-dev.hmpps.service.justice.gov.uk'
 
     let req: Request
     let res: Response
