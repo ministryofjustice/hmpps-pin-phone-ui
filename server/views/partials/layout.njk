@@ -38,15 +38,17 @@
             if (envelope.data.baseTypeSource === "ClickEvent") {
                let contentArray = JSON.parse(envelope.data.content);
                 for (let content of contentArray) {
+                  if (content.contentName &&
+                    content.contentName.endsWith("Account menu")) {
+                    content.contentName = "Account menu";
+                    }
                    if (content.contentName && content.qa === "prisoner-link") {
                       let redactedStr = "REDACTED";
                        content.contentName = redactedStr;
                        envelope.baseData.name= redactedStr;
                         }
                    }
-                   if (content.contentName.endsWith("Account menu")) {
-                        content.contentName = "Account menu";
-                   }
+
                    envelope.data.content = JSON.stringify(contentArray);
                 }
 
