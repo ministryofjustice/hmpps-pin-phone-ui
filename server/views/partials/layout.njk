@@ -41,11 +41,11 @@
                    if (content.contentName && content.qa === "prisoner-link") {
                       let redactedStr = "REDACTED";
                        content.contentName = redactedStr;
-                       if (redactedStr.endsWith("Account menu")) {
-                           content.contentName = "Account menu";
-                       }
                        envelope.baseData.name= redactedStr;
                         }
+                   }
+                   if (content.contentName.endsWith("Account menu")) {
+                        content.contentName = "Account menu";
                    }
                    envelope.data.content = JSON.stringify(contentArray);
                 }
