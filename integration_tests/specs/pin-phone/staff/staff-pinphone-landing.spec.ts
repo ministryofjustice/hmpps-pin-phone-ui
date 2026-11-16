@@ -5,7 +5,7 @@ import config from '../../../../server/config'
 
 test.describe('Staff landing home page', () => {
   test.use({
-    baseURL: 'http://staff-localhost:3007',
+    baseURL: 'http://staff.localhost:3007',
   })
 
   test.beforeEach(async ({ page }) => {
