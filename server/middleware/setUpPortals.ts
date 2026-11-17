@@ -2,7 +2,7 @@ import express, { Request, RequestHandler, Router } from 'express'
 import { PortalType } from '../@types/portalTypes'
 
 export const isRequestForStaffPortal = (req: Request): boolean =>
-  req.hostname === 'staff.' || req.hostname.startsWith('staff-')
+  req.hostname === 'staff.localhost' || req.hostname.startsWith('staff-')
 
 export const portalsMiddleware: RequestHandler = (req, res, next) => {
   const portalType: PortalType = isRequestForStaffPortal(req) ? 'staff' : 'prisoner'
