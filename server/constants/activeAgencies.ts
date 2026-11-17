@@ -1,6 +1,6 @@
 const environments: { [key: string]: string[] } = {
-  PROD: [],
-  PREPROD: [],
+  PROD: ['EEI'],
+  PREPROD: ['EEI'],
   TEST: ['BWI', 'CKI', 'RNI', 'EEI', 'WLI'],
   DEV: ['BWI', 'CKI', 'RNI', 'EEI', 'WLI'],
 }
