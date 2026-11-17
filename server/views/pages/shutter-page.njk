@@ -1,5 +1,6 @@
 {% extends "../partials/layout.njk" %}
 {%- from "moj/components/alert/macro.njk" import mojAlert -%}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set pageTitle = "Service unavailable" %}
 
@@ -11,5 +12,11 @@
     showTitleAsHeading: true,
     dismissible: false
   }) }}
+
+  {{ govukButton({
+    text: "Return to launchpad",
+    href: launchpadHome,
+    type: "submit"
+   }) }}
 
 {% endblock %}
