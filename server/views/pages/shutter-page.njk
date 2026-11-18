@@ -1,15 +1,20 @@
 {% extends "../partials/layout.njk" %}
-{%- from "moj/components/alert/macro.njk" import mojAlert -%}
-
-{% set pageTitle = "Service unavailable" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block content %}
 
-  {{ mojAlert({
-    variant: "error",
-    title: "PIN Phone Credit is not yet available.",
-    showTitleAsHeading: true,
-    dismissible: false
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">Sorry, the service is unavailable</h1>
+      <p class="govuk-body">
+        You will be able to use the service later.
+      </p>
+    </div>
+  </div>
+  {{ govukButton({
+    text: "Go back to Launchpad",
+    href: launchpadHome,
+    type: "submit"
   }) }}
 
 {% endblock %}
