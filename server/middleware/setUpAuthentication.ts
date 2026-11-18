@@ -45,12 +45,16 @@ export default function setUpAuthentication() {
 
   router.get('/sign-in', (req, res, next) => passport.authenticate(req.authStrategy.name)(req, res, next))
 
-  router.get('/sign-in/callback', (req, res, next) =>
+  router.get('/sign-in/callback', (req, res, next) => {
+    console.log('Callback hit')
+    console.log('Query:', req.query)
+    console.log('Session:', req.session)
+
     passport.authenticate(req.authStrategy.name, {
       successReturnToOrRedirect: req.session.returnTo || '/',
       failureRedirect: '/autherror',
-    })(req, res, next),
-  )
+    })(req, res, next)
+  })
 
   router.use('/sign-out', (req, res, next) => {
     const signOutUrl = req.authStrategy.signOutUrl(req)

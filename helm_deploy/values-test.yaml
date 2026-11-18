@@ -7,7 +7,7 @@ generic-service:
   ingress:
     hosts:
       - pin-phone-ui-test.hmpps.service.justice.gov.uk
-      - staff-pin-phone-ui-test.hmpps.service.justice.gov.uk
+      - staff-pin-phone-test.hmpps.service.justice.gov.uk
 
   env:
     INGRESS_URL: "https://pin-phone-ui-test.hmpps.service.justice.gov.uk"
