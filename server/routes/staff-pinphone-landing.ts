@@ -20,7 +20,7 @@ export default function staffPinPhoneRoutes(
     const userName = user.username
     telemetryService.trackEvent('STAFF_PIN_PHONE_LANDING', user, {})
 
-    return res.render('pages/staff/staff-pinphone-landing', {
+    return res.render('pages/staff-pinphone-landing', {
       userName,
     })
   })
