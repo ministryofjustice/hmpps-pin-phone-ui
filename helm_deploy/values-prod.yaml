@@ -18,7 +18,7 @@ generic-service:
     PRISONER_APPS_URL: "https://prisoner-apps.hmpps.service.justice.gov.uk/"
     PIN_PHONE_API_URL: "https://pin-phone.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: PROD
-    SHUTTER_ENABLED: "false"
+    SHUTTER_ENABLED: "true"
     AUDIT_ENABLED: "true"
     FLIP_URL: "https://feature-toggles.hmpps.service.justice.gov.uk"
 
