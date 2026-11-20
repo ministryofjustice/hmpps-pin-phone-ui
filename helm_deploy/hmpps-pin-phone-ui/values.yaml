@@ -14,7 +14,7 @@ generic-service:
 
   ingress:
     enabled: true
-    host: app-hostname.local # override per environment
+#    host: app-hostname.local # override per environment
     tlsSecretName: hmpps-pin-phone-ui-cert
     annotations:
       modsecurity_enabled: 'true'
