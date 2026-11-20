@@ -2,7 +2,6 @@ import { RequestHandler } from 'express'
 
 // eslint-disable-next-line import/prefer-default-export
 export const setUpLaunchpadFooter: RequestHandler = (req, res, next) => {
-  if (res.locals.isStaffPortal) return next()
   res.locals.launchpadFooterConfig = {
     meta: {
       hiddenDescription: 'Links',
@@ -10,5 +9,5 @@ export const setUpLaunchpadFooter: RequestHandler = (req, res, next) => {
     },
   }
 
-  return next()
+  next()
 }
