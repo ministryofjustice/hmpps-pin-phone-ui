@@ -69,11 +69,7 @@
 {% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
 
 {% block header %}
-  {% if isStaffPortal %}
-    {% include "./header.njk" %}
-  {% else %}
-    {{ launchpadHeader(launchpadHeaderConfig) }}
-  {% endif %}
+  {{ launchpadHeader(launchpadHeaderConfig) }}
 {% endblock %}
 
 {% block beforeContent %}
@@ -104,11 +100,7 @@
 {% endblock %}
 
 {% block footer %}
-  {% if isStaffPortal %}
-    {{ super() }}
-  {% else %}
-     {{ launchpadFooter(launchpadFooterConfig) }}
-  {% endif %}
+  {{ launchpadFooter(launchpadFooterConfig) }}
 {% endblock %}
 
 {% block bodyEnd %}

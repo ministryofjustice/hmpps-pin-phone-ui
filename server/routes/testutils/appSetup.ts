@@ -15,7 +15,6 @@ import { DigitalPinPhoneApiClient } from '../../data'
 import PinPhoneService from '../../services/pinPhoneService'
 import TelemetryService from '../../services/telemetryService'
 import { ApplicationInfo } from '../../applicationInfo'
-import { PortalType } from '../../@types/portalTypes'
 
 jest.mock('../../services/auditService')
 jest.mock('../../data/digitalPinPhoneApiClient')
@@ -52,12 +51,7 @@ export const user: HmppsUser = {
 
 export const flashProvider = jest.fn()
 
-function appSetup(
-  services: Services,
-  production: boolean,
-  userSupplier: () => HmppsUser,
-  portalType: PortalType,
-): Express {
+function appSetup(services: Services, production: boolean, userSupplier: () => HmppsUser): Express {
   const app = express()
 
   app.set('view engine', 'njk')
@@ -67,11 +61,8 @@ function appSetup(
   app.use((req, res, next) => {
     req.user = userSupplier() as Express.User
     req.flash = flashProvider
-    req.portalType = portalType
     res.locals = {
       user: { ...req.user } as HmppsUser,
-      isStaffPortal: portalType === 'staff',
-      isPrisonerPortal: portalType === 'prisoner',
       cspNonce: '',
       csrfToken: '',
       asset_path: '',
@@ -108,12 +99,10 @@ export function appWithAllRoutes({
     telemetryService: new TelemetryService() as jest.Mocked<TelemetryService>,
   },
   userSupplier = () => user,
-  portalType = 'prisoner' as PortalType,
 }: {
   production?: boolean
   services?: Partial<Services>
   userSupplier?: () => HmppsUser
-  portalType?: PortalType
 }): Express {
-  return appSetup(services as Services, production, userSupplier, portalType)
+  return appSetup(services as Services, production, userSupplier)
 }
