@@ -39,7 +39,7 @@
                if (envelope.baseData?.name && envelope.baseData.name.toLowerCase().includes("account")) {
                     envelope.baseData.name = "Account Menu";
                     }
-               if (envelope.baseData?.name && envelope.baseData.name.toLowerCase().includes("PIN phone - GOV.UK")) {
+               if (envelope.baseData?.name && envelope.baseData.name.includes("PIN phone - GOV.UK")) {
                      envelope.baseData.name = "PIN phone - GOV.UK";
                     }
                let contentArray = JSON.parse(envelope.data.content);
