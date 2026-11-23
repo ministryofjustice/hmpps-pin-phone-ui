@@ -39,11 +39,18 @@
                if (envelope.baseData?.name && envelope.baseData.name.toLowerCase().includes("account")) {
                     envelope.baseData.name = "Account Menu";
                     }
+               if (envelope.baseData?.name && envelope.baseData.name.toLowerCase().includes("PIN phone - GOV.UK")) {
+                     envelope.baseData.name = "PIN phone - GOV.UK";
+                    }
                let contentArray = JSON.parse(envelope.data.content);
                 for (let content of contentArray) {
                   if (content.contentName &&
                     content.contentName.endsWith("Account menu")) {
                     content.contentName = "Account menu";
+                    }
+                  if (content.contentName &&
+                    content.contentName.endsWith("PIN phone - GOV.UK")) {
+                    content.contentName = "PIN phone - GOV.UK";
                     }
                    if (content.contentName && content.qa === "prisoner-link") {
                       let redactedStr = "REDACTED";
