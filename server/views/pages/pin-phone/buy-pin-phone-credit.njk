@@ -132,10 +132,13 @@
           }) }}
           {{ govukButton({
               text: "Continue",
-              type: "submit"
+              type: "submit",
+              preventDoubleClick: true,
+              attributes: { 'data-qa': 'submit-form' }
             }) }}
           </form>
          </div>
        </div>
      </div>
+  <script src={{ '/assets/js/preventDoubleSubmit.js' | assetMap }}></script>
 {% endblock %}

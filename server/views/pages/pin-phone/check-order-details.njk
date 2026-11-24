@@ -68,7 +68,9 @@
          <div class="govuk-button-group">
              {{ govukButton({
                text: "Buy credit",
-               type: "submit"
+               type: "submit",
+               preventDoubleClick: true,
+              attributes: { 'data-qa': 'submit-form' }
              }) }}
              <a class="govuk-link" href="/pin-phone">Cancel</a>
          </div>
@@ -76,4 +78,6 @@
       </div>
     </div>
  <div>
+  <script src={{ '/assets/js/preventDoubleSubmit.js' | assetMap }}></script>
+
 {% endblock %}
