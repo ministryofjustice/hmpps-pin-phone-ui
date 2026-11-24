@@ -68,7 +68,9 @@
          <div class="govuk-button-group">
              {{ govukButton({
                text: "Buy credit",
-               type: "submit"
+               type: "submit",
+               attributes: { 'data-prevent-double-click': 'true' }
+
              }) }}
              <a class="govuk-link" href="/pin-phone">Cancel</a>
          </div>
