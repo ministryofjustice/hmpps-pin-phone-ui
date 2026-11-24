@@ -132,7 +132,9 @@
           }) }}
           {{ govukButton({
               text: "Continue",
-              type: "submit"
+              type: "submit",
+              attributes: { 'data-prevent-double-click': 'true' }
+
             }) }}
           </form>
          </div>
