@@ -84,3 +84,28 @@ export interface CompleteCartResponse {
   orderId: string | null
   cartId: string
 }
+
+export interface CallHistoryRequest {
+  reference: string
+  prisonerId: string
+  startDate: Date
+  endDate: Date
+  pageSize: number
+  pageNumber: number
+}
+
+export interface CallHistoryResponse {
+  reference: string
+  prisonId: string
+  calls: CallHistoryRecord[]
+}
+
+export interface CallHistoryRecord {
+  id: number
+  telephoneNumber: string
+  transactionStartTime: Date | null
+  contactType: string
+  durationSeconds: number
+  costPence: number
+  balancePence: number
+}

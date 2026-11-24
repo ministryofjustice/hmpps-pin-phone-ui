@@ -1,5 +1,11 @@
 import { DigitalPinPhoneApiClient } from '../data'
-import { CreateCartRequest, PaymentRequest, PolicyEvaluation, PolicyResult } from '../pinPhone.model'
+import {
+  CallHistoryRequest,
+  CreateCartRequest,
+  PaymentRequest,
+  PolicyEvaluation,
+  PolicyResult,
+} from '../pinPhone.model'
 
 export default class PinPhoneService {
   constructor(private readonly digitalPinPhoneApiClient: DigitalPinPhoneApiClient) {}
@@ -26,5 +32,9 @@ export default class PinPhoneService {
 
   completePayment(cartId: string, paymentRequest: PaymentRequest) {
     return this.digitalPinPhoneApiClient.completePayment(cartId, paymentRequest)
+  }
+
+  retrieveCallHistory(callHistoryRequest: CallHistoryRequest) {
+    return this.digitalPinPhoneApiClient.retrieveCallHistory(callHistoryRequest)
   }
 }

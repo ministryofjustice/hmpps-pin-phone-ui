@@ -7,6 +7,7 @@ export const PATHS = {
   VIEW_CONTACTS: '/pin-phone/view-contacts',
   PIN_PHONE_CONFIRMATION: '/pin-phone/buy-credit-confirmation',
   SHUTTER_PAGE: 'pages/shutter-page.njk',
+  CHECK_CALL_HISTORY_PAGE: '/pin-phone/check-call-history',
 
   // BACKEND API
   CREATE_CART: '/api/carts',

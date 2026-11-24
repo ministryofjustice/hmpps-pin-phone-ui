@@ -3,6 +3,8 @@ import type { AuthenticationClient } from '@ministryofjustice/hmpps-auth-clients
 import config from '../config'
 import logger from '../../logger'
 import {
+  CallHistoryRequest,
+  CallHistoryResponse,
   CompleteCartResponse,
   CreateCartRequest,
   EnrichedPinPhonePrisoner,
@@ -71,6 +73,16 @@ export default class DigitalPinPhoneApiClient extends RestClient {
       {
         path: `/api/carts/${cartId}/checkout`,
         data: { ...paymentRequest },
+      },
+      asSystem(),
+    )
+  }
+
+  async retrieveCallHistory(callHistoryRequest: CallHistoryRequest): Promise<CallHistoryResponse> {
+    return this.post(
+      {
+        path: `/api/callrecords`,
+        data: { ...callHistoryRequest },
       },
       asSystem(),
     )
