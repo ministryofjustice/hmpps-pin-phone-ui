@@ -69,9 +69,8 @@
              {{ govukButton({
                text: "Buy credit",
                type: "submit",
-               preventDoubleClick: true
-
-
+               preventDoubleClick: true,
+              attributes: { 'data-qa': 'submit-form' }
              }) }}
              <a class="govuk-link" href="/pin-phone">Cancel</a>
          </div>
