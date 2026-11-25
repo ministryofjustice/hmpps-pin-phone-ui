@@ -64,6 +64,24 @@ function appSetup(
 
   nunjucksSetup(app, testAppInfo)
   app.use(setUpWebSession())
+  app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
+    next()
+  })
+  app.use((req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private')
+    res.setHeader('Pragma', 'no-cache')
+    res.setHeader('Expires', '0')
+    next()
+  })
+  app.use((req, res, next) => {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload')
+    next()
+  })
+  app.use((req, res, next) => {
+    res.setHeader('Content-Security-Policy', "frame-ancestors 'none'")
+    next()
+  })
   app.use((req, res, next) => {
     req.user = userSupplier() as Express.User
     req.flash = flashProvider
